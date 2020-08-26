@@ -5,33 +5,26 @@
  */
 
 // @lc code=start
-typedef unordered_map<
-    string, 
-    priority_queue<string, vector<string>, 
-    std::greater<string>>> VecHeap;
+typedef unordered_map<string, priority_queue<string, vector<string>, greater<string>>> Map;
 class Solution {
  public:
   vector<string> findItinerary(vector<vector<string>>& tickets) {
     vector<string> result;
-
-    VecHeap vec;
-
-    for (auto it : tickets) {
-      vec[it[0]].push(it[1]);
+    Map map;
+    for (auto t : tickets) {
+      map[t[0]].push(t[1]);
     }
 
-    dfs(result, vec, "JFK");
-
+    Dfs(result, map, "JFK");
     reverse(result.begin(), result.end());
     return result;
   }
 
- private:
-  void dfs(vector<string>& result, VecHeap& vec, string curr) {
-    while (vec.count(curr) && vec[curr].size() > 0) {
-      string next = vec[curr].top();
-      vec[curr].pop();
-      dfs(result, vec, next);
+  void Dfs(vector<string>& result, Map& map, string curr) {
+    while (map.count(curr) && map[curr].size() > 0) {
+      auto next = map[curr].top();
+      map[curr].pop();
+      Dfs(result, map, next);
     }
     result.push_back(curr);
   }
