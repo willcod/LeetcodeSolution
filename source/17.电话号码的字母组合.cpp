@@ -8,29 +8,29 @@
 class Solution {
  public:
   vector<string> letterCombinations(string digits) {
-    if (digits.size() == 0) return {};
+    if (digits.empty()) return {};
 
     vector<string> result;
-    getCombinations(result, digits, "", 0);
+    getCombination(result, digits, "", 0);
     return result;
   }
 
-  void getCombinations(vector<string>& result, string digits, string s,
-                       int index) {
-    if (digits.size() == index) {
+ private:
+  void getCombination(vector<string>& result, string digits, string s,
+                      int index) {
+    if (index == digits.length()) {
       result.push_back(s);
       return;
     }
 
-    int digit = digits[index] - '0';
-    string letters = letterMap[digit];
-    for (int i = 0; i < letters.size(); i++) {
-      getCombinations(result, digits, s + letters[i], index + 1);
+    string letters = keyboard[digits[index] - '0'];
+    for (auto l : letters) {
+      getCombination(result, digits, s + l, index + 1);
     }
   }
 
  private:
-  const string letterMap[10] = {"",    "",    "abc",  "def", "ghi",
-                                "jkl", "mno", "pqrs", "tuv", "wxyz"};
+  string keyboard[10] = {"",    "",    "abc",  "def", "ghi",
+                         "jkl", "mno", "pqrs", "tuv", "wxyz"};
 };
 // @lc code=end
