@@ -5,28 +5,30 @@
  */
 
 // @lc code=start
-typedef unordered_map<string, priority_queue<string, vector<string>, greater<string>>> Map;
 class Solution {
  public:
   vector<string> findItinerary(vector<vector<string>>& tickets) {
-    vector<string> result;
-    Map map;
-    for (auto t : tickets) {
-      map[t[0]].push(t[1]);
+    for (auto ticket : tickets) {
+      Flights[ticket[0]].insert(ticket[1]);
     }
 
-    Dfs(result, map, "JFK");
-    reverse(result.begin(), result.end());
-    return result;
+    vector<string> path;
+    visit(path, "JFK");
+
+    reverse(path.begin(), path.end());
+    return path;
   }
 
-  void Dfs(vector<string>& result, Map& map, string curr) {
-    while (map.count(curr) && map[curr].size() > 0) {
-      auto next = map[curr].top();
-      map[curr].pop();
-      Dfs(result, map, next);
+  void visit(vector<string>& path, string airport) {
+    while (!Flights[airport].empty()) {
+      string next = *Flights[airport].begin();
+      Flights[airport].erase(Flights[airport].begin());
+      visit(path, next);
     }
-    result.push_back(curr);
+    path.push_back(airport);
   }
+
+ private:
+  unordered_map<string, multiset<string>> Flights;
 };
 // @lc code=end
