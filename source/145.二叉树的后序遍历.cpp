@@ -15,31 +15,34 @@
  * };
  */
 class Solution {
- public:
-  vector<int> postorderTraversal(TreeNode* root) {
-    if (!root) return {};
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        if (!root) return {};
+        vector<int> result;
+        stack<TreeNode*> stk;
 
-    vector<int> result;
-    stack<TreeNode*> stk;
-    stk.push(root);
-    while (!stk.empty()) {
-      TreeNode* node = stk.top();
-      if (node) {
-        stk.pop();
+        stk.push(root);
 
-        stk.push(node);
-        stk.push(NULL);
-        if (node->right) stk.push(node->right);
-        if (node->left) stk.push(node->left);
+        while (!stk.empty()) {
+            auto node = stk.top();
+            if (node) {
+                stk.pop();
 
-      } else {
-        stk.pop();
-        auto n = stk.top();
-        stk.pop();
-        result.push_back(n->val);
-      }
+                stk.push(node);
+                stk.push(NULL);
+
+                if (node->right) stk.push(node->right);
+                if (node->left) stk.push(node->left);
+            } else {
+                stk.pop();
+                auto n = stk.top();
+                stk.pop();
+
+                result.push_back(n->val);
+            }
+        }
+        return result;
     }
-    return result;
-  }
 };
 // @lc code=end
+

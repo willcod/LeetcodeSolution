@@ -6,19 +6,21 @@
 
 // @lc code=start
 class Solution {
- public:
-  bool judgeCircle(string moves) {
-      int v = 0;
-      int h = 0;
-      for (char c : moves) {
-          switch(c) {
-              case 'U' : v++; break;
-              case 'D' : v--; break;
-              case 'L' : h++; break;
-              case 'R' : h--; break;
-          }
-      }
-      return v==0 && h == 0;
-  }
+public:
+    bool judgeCircle(string moves) {
+        int x = 0;
+        int y = 0;
+        for (auto m : moves) {
+            switch(m) {
+                case 'U' : y += 1; break;
+                case 'D' : y += -1; break;
+                case 'L' : x += -1; break;
+                case 'R' : x += 1; break;
+            }
+        }
+
+        return x == 0 && y == 0;
+    }
 };
 // @lc code=end
+
