@@ -6,20 +6,22 @@
 
 // @lc code=start
 class Solution {
- public:
-  bool isAnagram(string s, string t) {
-    if (s.length() != t.length()) return false;
-    unordered_map<char, int> hash;
-    for (auto c : s) {
-      hash[c]++;
-    }
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length()) return false;
 
-    for (auto c : t) {
-      hash[c]--;
-      if (hash[c] < 0) return false;
-    }
+        unordered_map<char, int> hashmap;
+        for (int i = 0; i < s.length(); i++) {
+            hashmap[s[i]]++;
+            hashmap[t[i]]--;
+        }
 
-    return true;
-  }
+        for (auto kv : hashmap) {
+            if (kv.second != 0)
+                return false;
+        }
+        return true;
+    }
 };
 // @lc code=end
+
