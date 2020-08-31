@@ -6,6 +6,38 @@
 
 // @lc code=start
 class Solution {
+  vector<vector<int>> results;
+
+ public:
+  vector<vector<int>> permuteUnique(vector<int>& nums) {
+    vector<bool> used(nums.size(), false);
+    vector<int> sub;
+    sort(nums.begin(), nums.end());
+    backtracking(nums, used, sub, 0);
+    return results;
+  }
+
+  void backtracking(vector<int>& nums, vector<bool>& used, vector<int>& sub,
+                    int pos) {
+    if (pos == nums.size()) {
+      results.push_back(sub);
+      return;
+    }
+
+    for (int i = 0; i < nums.size(); i++) {
+      if (used[i]) continue;
+      if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue;
+
+      sub.push_back(nums[i]);
+      used[i] = true;
+      backtracking(nums, used, sub, pos + 1);
+      sub.pop_back();
+      used[i] = false;
+    }
+  }
+};
+// @lc code=end
+class Solution {
  public:
   vector<vector<int>> permuteUnique(vector<int>& nums) {
     vector<vector<int>> results;
@@ -30,4 +62,3 @@ class Solution {
     }
   }
 };
-// @lc code=end

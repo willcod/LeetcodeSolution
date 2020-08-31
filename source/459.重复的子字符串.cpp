@@ -6,6 +6,13 @@
 
 // @lc code=start
 class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        return (s + s).find(s, 1) != s.length();
+    }
+};
+// @lc code=end
+class Solution {
  public:
   bool repeatedSubstringPattern(string str) {
     int n = str.length();
@@ -16,4 +23,3 @@ class Solution {
     return false;
   }
 };
-// @lc code=end
