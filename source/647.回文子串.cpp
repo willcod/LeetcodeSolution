@@ -9,9 +9,9 @@ class Solution {
 public:
     int countSubstrings(string s) {
         int count = 0;
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = 0; i-j >= 0 && s[i-j] == s[i+j]; j++) count++;
-            for (int j = 0; i-j-1 >= 0 && s[i-1-j] == s[i+j];j++) count++;
+        for (int i = 0; i < s.size(); i++) {
+            for (int j = 0; i - j >= 0 && i + j < s.size() && s[i-j] == s[i+j]; j++) count++;
+            for (int j = 0; i - j - 1 >= 0 && i + j < s.size() && s[i-j-1] == s[i+j]; j++) count++;
         }
         return count;
     }
