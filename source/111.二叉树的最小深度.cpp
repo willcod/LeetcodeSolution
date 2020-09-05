@@ -16,16 +16,30 @@
  */
 class Solution {
 public:
-    int minDepth(TreeNode* root) {
-        if (!root) return 0;
-        if (!root->left && !root->right) return 1;
+ int minDepth(TreeNode* root) {
+    if (!root) return 0;
+    if (!root->left && !root->right) return 1;
 
-        int m = INT_MAX;
-        if (root->left) m = min(minDepth(root->left), m);
-        if (root->right) m = min(minDepth(root->right), m);
-
-        return m + 1;
+    int min = INT_MAX;
+    if (root->left) {
+      min = std::min(minDepth(root->left), min);
     }
+
+    if (root->right) {
+      min = std::min(minDepth(root->right), min);
+    }
+    return min + 1;
+  }
 };
 // @lc code=end
 
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if (!root) return 0;
+        if (!root->left) return minDepth(root->right) + 1;
+        if (!root->right) return minDepth(root->left) + 1;
+
+        return min(minDepth(root->left), minDepth(root->right)) + 1;
+    }
+};
