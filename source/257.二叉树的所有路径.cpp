@@ -17,6 +17,31 @@
 class Solution {
  public:
   vector<string> binaryTreePaths(TreeNode* root) {
+    vector<string> res;
+    if (!root) return res;
+    string path;
+    travel(res, path, root);
+    return res;
+  }
+
+  void travel(vector<string>& res, string path, TreeNode* root) {
+    if (!root) return;
+
+    path += to_string(root->val);
+
+    if (!root->left && !root->right) {
+      res.push_back(path);
+      return;
+    }
+
+    if (root->left) travel(res, path + "->", root->left);
+    if (root->right) travel(res, path + "->", root->right);
+  }
+};
+// @lc code=end
+class Solution {
+ public:
+  vector<string> binaryTreePaths(TreeNode* root) {
     vector<string> result;
     if (!root) return {};
 
@@ -39,4 +64,3 @@ class Solution {
         travel(result, root->right, path + "->" + to_string(root->right->val));
   }
 };
-// @lc code=end
