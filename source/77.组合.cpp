@@ -6,28 +6,28 @@
 
 // @lc code=start
 class Solution {
- public:
-  vector<vector<int>> combine(int n, int k) {
-    if (n <= 0 || k <= 0 || k > n) return {};
+public:
+    vector<vector<int>> combine(int n, int k) {
+        if (n < k) return {};
 
-    vector<vector<int>> result;
-    vector<int> sub;
-    backtracking(result, n, k, sub, 1);
-    return result;
-  }
-
-  void backtracking(vector<vector<int>>& result, int n, int k, vector<int>& sub,
-                    int index) {
-    if (sub.size() == k) {
-      result.push_back(sub);
-      return;
+        vector<vector<int>> res;
+        vector<int> path;
+        backtracking(res, path, n, k, 1);
+        return res;
     }
 
-    for (int i = index; i <=n; i++) { //i <= n - (k - sub.size()) + 1 剪枝
-      sub.push_back(i);
-      backtracking(result, n, k, sub, i + 1);
-      sub.pop_back();
+    void backtracking(vector<vector<int>>& res, vector<int>& path, int n, int k, int index) {
+        if (path.size() == k) {
+            res.push_back(path);
+            return;
+        }
+
+        for (int i = index; i <= n; i++) {
+            path.push_back(i);
+            backtracking(res, path, n, k, i+1);
+            path.pop_back();
+        }
     }
-  }
 };
 // @lc code=end
+
