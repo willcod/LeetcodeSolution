@@ -6,27 +6,36 @@
 
 // @lc code=start
 class Solution {
-public:
-    void rotate(vector<int>& nums, int k) {
-        int n = nums.size();
-        k %= n;
+ public:
+  void rotate(vector<int>& nums, int k) {
+    int n = nums.size();
+    k %= n;
 
-        int count = 0;
-        for (int i = 0; count < n; i++) {
-            int current = i;
-            int previous = nums[i];
+    int count = 0;
+    for (int start = 0; count < n; start++) {
+      int currentPos = start;
+      int currentVal = nums[start];
 
-            do {
-                int next = (k+current) % n;
-                int temp = nums[next];
-                nums[next] = previous;
-                previous = temp;
+      do {
+        int nextPos = (currentPos + k) % n;
+        int nextVal = nums[nextPos];
+        nums[nextPos] = currentVal;
 
-                current = next;
-                count++;
-            } while (current != i);
-        }
+        currentPos = nextPos;
+        currentVal = nextVal;
+        count++;
+      } while (currentPos != start);
     }
+  }
 };
 // @lc code=end
-
+class Solution {
+ public:
+  void rotate(vector<int>& nums, int k) {
+    int n = nums.size();
+    k %= n;
+    reverse(nums.begin(), nums.end());
+    reverse(nums.begin(), nums.begin() + k);
+    reverse(nums.begin() + k, nums.end());
+  }
+};

@@ -9,10 +9,10 @@ class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
-        unordered_set<string> head, tail;
-        unordered_set<string>*phead, *ptail;
-
         if (!dict.count(endWord)) return 0;
+        
+        unordered_set<string> head, tail;
+        unordered_set<string> *phead, *ptail;
 
         head.insert(beginWord);
         tail.insert(endWord);
@@ -27,7 +27,7 @@ public:
                 ptail = &head;
             }
 
-            unordered_set<string> temp;
+            unordered_set<string> level;
             for (auto it = phead->begin(); it != phead->end(); it++) {
                 string word = *it;
                 for (int i = 0; i < word.length(); i++) {
@@ -37,15 +37,15 @@ public:
                         if (ptail->count(word)) return ladder;
 
                         if (dict.count(word)) {
-                            temp.insert(word);
+                            level.insert(word);
                             dict.erase(word);
                         }
                     }
                     word[i] = t;
                 }
             }
+            phead->swap(level);
             ladder++;
-            phead->swap(temp);
         }
         return 0;
     }

@@ -6,18 +6,21 @@
 
 // @lc code=start
 class Solution {
- public:
-  int subarraySum(vector<int>& nums, int k) {
-    unordered_map<int, int> hash;
-    hash[0] = 1;
-    int count = 0, pre = 0;
-    for (int n : nums) {
-      pre += n;
-      if (hash.count(pre - k)) count += hash[pre - k];
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int, int> table;
+        int count = 0;
+        int pre = 0;
+        table[0] = 1;
 
-      hash[pre]++;
+        for (int n : nums) {
+            pre += n;
+            if (table.count(pre-k)) count += table[pre-k];
+            table[pre]++;
+        }
+
+        return count;
     }
-    return count;
-  }
 };
 // @lc code=end
+
