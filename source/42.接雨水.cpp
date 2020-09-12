@@ -6,6 +6,33 @@
 
 // @lc code=start
 class Solution {
+ public:
+  int trap(vector<int>& pillars) {
+    if (pillars.size() < 3) return 0;
+
+    int left = 0;
+    int right = pillars.size() - 1;
+
+    int leftArea = 0;
+    int rightArea = 0;
+
+    int water = 0;
+    while (left < right) {
+      leftArea = max(leftArea, pillars[left]);
+      rightArea = max(rightArea, pillars[right]);
+
+      if (leftArea < rightArea) {
+        water += leftArea - pillars[left++];
+      } else {
+        water += rightArea - pillars[right--];
+      }
+    }
+
+    return water;
+  }
+};
+// @lc code=end
+class Solution {
 public:
     int trap(vector<int>& height) {
         if (height.size() < 3) return 0;
@@ -28,5 +55,3 @@ public:
         return water;
     }
 };
-// @lc code=end
-
