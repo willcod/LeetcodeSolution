@@ -3,7 +3,7 @@
  *
  * [105] 从前序与中序遍历序列构造二叉树
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -17,27 +17,24 @@
 class Solution {
  public:
   TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-    for (int i = 0; i < inorder.size(); i++) {
-      inorder_hash[inorder[i]] = i;
-    }
-    int ps = 0;
-    return createTree(preorder, inorder, ps, 0, inorder.size() - 1);
+    unordered_map<int, int> hash;
+    for (int i = 0; i < inorder.size(); i++) hash[inorder[i]] = i;
+
+    int depth = 0;
+    return build(preorder, inorder, hash, 0, inorder.size() - 1, depth);
   }
 
-  TreeNode* createTree(vector<int>& preorder, vector<int>& inorder, int& ps,
-                       int is, int ie) {
-    if (ps >= preorder.size() || is > ie) return NULL;
+  TreeNode* build(vector<int>& preorder, vector<int>& inorder,
+                  unordered_map<int, int>& hash, int start, int end, int& ps) {
+    if (ps >= inorder.size() || start > end) return NULL;
 
     auto root = new TreeNode(preorder[ps]);
-    int pos = inorder_hash[preorder[ps]];
+    int in = hash[preorder[ps]];
     ps++;
-    root->left = createTree(preorder, inorder, ps, is, pos - 1);
-    root->right = createTree(preorder, inorder, ps, pos + 1, ie);
 
+    root->left = build(preorder, inorder, hash, start, in - 1, ps);
+    root->right = build(preorder, inorder, hash, in + 1, end, ps);
     return root;
   }
-
- private:
-  unordered_map<int, int> inorder_hash;
 };
 // @lc code=end

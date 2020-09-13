@@ -3,7 +3,7 @@
  *
  * [107] 二叉树的层次遍历 II
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -17,26 +17,25 @@
 class Solution {
  public:
   vector<vector<int>> levelOrderBottom(TreeNode* root) {
-      int d = depth(root);
-      vector<vector<int>> res(d);
-      levelOrder(res, root, d-1);
-      return res;
+    int d = depth(root);
+    vector<vector<int>> res(d);
+    travel(root, res, d - 1);
+    return res;
   }
 
-  void levelOrder(vector<vector<int>>& res, TreeNode* root, int level) {
-      if (!root) return;
-      res[level].push_back(root->val);
-      levelOrder(res, root->left, level-1);
-      levelOrder(res, root->right, level-1);
+  void travel(TreeNode* root, vector<vector<int>>& res, int level) {
+    if (!root) return;
+    res[level].push_back(root->val);
+    if (root->left) travel(root->left, res, level - 1);
+    if (root->right) travel(root->right, res, level - 1);
   }
 
   int depth(TreeNode* root) {
-      if (!root) return 0;
-      return max(depth(root->left), depth(root->right)) + 1;
+    if (!root) return 0;
+    return max(depth(root->left), depth(root->right)) + 1;
   }
 };
 // @lc code=end
-
 //DFS
 /*
 34/34 cases passed (0 ms)
@@ -97,4 +96,3 @@ class Solution {
     return res;
   }
 };
-
