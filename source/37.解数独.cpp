@@ -7,7 +7,9 @@
 // @lc code=start
 class Solution {
  public:
-  void solveSudoku(vector<vector<char>>& board) { solveSudoku(board, 0, 0); }
+  void solveSudoku(vector<vector<char>>& board) { 
+    solveSudoku(board, 0, 0); 
+  }
 
   bool solveSudoku(vector<vector<char>>& board, int x, int y) {
     if (x == 9) return true;

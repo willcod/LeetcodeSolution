@@ -3,30 +3,29 @@
  *
  * [322] 零钱兑换
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
-    int coinChange(vector<int>& coins, int amount) {
-        int ans = INT_MAX;
-        sort(coins.rbegin(), coins.rend());
+ public:
+  int coinChange(vector<int>& coins, int amount) {
+    sort(coins.rbegin(), coins.rend());
+    int res = INT_MAX;
+    coinChange(coins, amount, 0, 0, res);
+    return res == INT_MAX ? -1 : res;
+  }
 
-        coinChange(coins, amount, 0, 0, ans);
-        return ans == INT_MAX? -1 : ans;
+  void coinChange(vector<int>& coins, int amount, int index, int count,
+                  int& res) {
+    if (amount == 0) {
+      res = min(count, res);
+      return;
     }
 
-    void coinChange(vector<int>& coins, int amount, int index, int count, int &ans) {
-        if (amount == 0) {
-            ans = min(count, ans);
-            return;
-        }
+    if (index == coins.size()) return;
 
-        if (index == coins.size()) return;
-
-        for (int k = amount/coins[index]; k >= 0 && k + count < ans; k--) {
-            coinChange(coins, amount - k*coins[index], index+1, count+k, ans);
-        }
+    for (int c = amount / coins[index]; c >= 0 && c + count < res; c--) {
+      coinChange(coins, amount - c * coins[index], index + 1, c + count, res);
     }
+  }
 };
 // @lc code=end
-
