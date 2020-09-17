@@ -3,31 +3,32 @@
  *
  * [491] 递增子序列
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
  public:
   vector<vector<int>> findSubsequences(vector<int>& nums) {
-    vector<vector<int>> result;
-    vector<int> subseq;
-    backtracking(nums, result, subseq, 0);
-    return result;
+    vector<vector<int>> res;
+    vector<int> path;
+    findSubsequence(res, nums, path, 0);
+    return res;
   }
 
-  void backtracking(vector<int>& nums, vector<vector<int>>& result,
-                    vector<int>& subseq, int startIndex) {
-    if (subseq.size() > 1) {
-      result.push_back(subseq);
+  void findSubsequence(vector<vector<int>>& res, vector<int>& nums,
+                       vector<int>& path, int index) {
+    if (path.size() > 1) {
+      res.push_back(path);
     }
 
-    int hash[201] = {0};
-    for (int i = startIndex; i < nums.size(); i++) {
-      if ((subseq.empty() || nums[i] >= subseq.back()) &&
-          hash[nums[i] + 100] == 0) {
-        subseq.push_back(nums[i]);
-        backtracking(nums, result, subseq, i + 1);
-        subseq.pop_back();
-        hash[nums[i] + 100] = 1;
+    int used[201] = {0, 0};
+    for (int i = index; i < nums.size(); i++) {
+      if (path.empty() || nums[i] >= path.back()) {
+        if (used[nums[i] + 100] == 0) {
+          path.push_back(nums[i]);
+          findSubsequence(res, nums, path, i + 1);
+          path.pop_back();
+          used[nums[i] + 100] = 1;
+        }
       }
     }
   }
