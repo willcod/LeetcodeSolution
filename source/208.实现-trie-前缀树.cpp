@@ -7,52 +7,48 @@
 // @lc code=start
 class Trie {
     bool _isEnd;
-    Trie* _next[26];
+    Trie* _branch[26];
 public:
     /** Initialize your data structure here. */
     Trie() {
         _isEnd = false;
-        memset(_next, NULL, sizeof(_next));
+        memset(_branch, NULL, sizeof(_branch));
     }
 
     ~Trie() {
-        for (auto n : _next) {
-            if (n != NULL) delete n;
+        for (auto n : _branch) {
+            if (n) delete n;
         }
     }
     
     /** Inserts a word into the trie. */
     void insert(string word) {
-        auto node = this;
-        for (char c : word) {
-            if (node->_next[c-'a'] == NULL) {
-                node->_next[c-'a'] = new Trie();
-            }
-            node = node->_next[c-'a'];
+        auto n = this;
+        for (auto c : word) {
+            if (!n->_branch[c-'a'])
+                n->_branch[c-'a'] = new Trie();
+            n = n->_branch[c-'a'];
         }
-        node->_isEnd = true;
+        n->_isEnd = true;
     }
     
     /** Returns if the word is in the trie. */
     bool search(string word) {
-        auto node = this;
-        for (char c : word) {
-            node = node->_next[c-'a'];
-            if (node == NULL)
-                return false;
+        auto n = this;
+        for (auto c : word) {
+            n = n->_branch[c-'a'];
+            if (!n) return false;
         }
-        return node->_isEnd;
+        return n->_isEnd;
     }
     
     /** Returns if there is any word in the trie that starts with the given prefix. */
     bool startsWith(string prefix) {
-        auto node = this;
-        for (char c : prefix) {
-            node = node->_next[c-'a'];
-            if (node == NULL)
-                return false;
+        auto n = this;
+        for (auto c : prefix) {
+            n = n->_branch[c-'a'];
+            if (!n) return false;
         }
-
         return true;
     }
 };

@@ -3,38 +3,32 @@
  *
  * [39] 组合总和
  */
-
+#include "cpp_includes.h"
 // @lc code=start
-class Solution {
- public:
-  vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-      
-  }
-};
-// @lc code=end
 class Solution {
  public:
   vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
     sort(candidates.begin(), candidates.end());
     vector<vector<int>> res;
     vector<int> path;
-    backtracking(res, candidates, target, path, 0);
+    combinationSum(res, path, candidates, target, 0);
     return res;
   }
 
-  void backtracking(vector<vector<int>>& res, vector<int>& candidates,
-                    int target, vector<int>& path, int index) {
-    if (!target) {
+  void combinationSum(vector<vector<int>>& res, vector<int>& path,
+                      vector<int>& nums, int target, int index) {
+    if (path.size() > 0 && target == 0) {
       res.push_back(path);
-      return;
     }
 
-    for (int i = index; i < candidates.size(); i++) {
-      if (target < candidates[i]) break;
+    // if (index == nums.size() - 1) return;
 
-      path.push_back(candidates[i]);
-      backtracking(res, candidates, target - candidates[i], path, i);
+    for (int i = index; i < nums.size(); i++) {
+      if (nums[i] > target) break;
+      path.push_back(nums[i]);
+      combinationSum(res, path, nums, target - nums[i], i);
       path.pop_back();
     }
   }
 };
+// @lc code=end
