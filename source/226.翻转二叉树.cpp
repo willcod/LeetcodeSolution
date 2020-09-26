@@ -19,12 +19,11 @@ public:
     TreeNode* invertTree(TreeNode* root) {
         if (!root) return NULL;
 
-        root->left = invertTree(root->left);
-        root->right = invertTree(root->right);
+        auto left = invertTree(root->right);
+        auto right = invertTree(root->left);
 
-        TreeNode* temp = root->right;
-        root->right = root->left;
-        root->left = temp;
+        root->left = left;
+        root->right = right;
 
         return root;
     }
