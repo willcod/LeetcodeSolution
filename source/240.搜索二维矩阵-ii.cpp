@@ -6,24 +6,24 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  bool searchMatrix(vector<vector<int>>& matrix, int target) {
-    if (matrix.empty() || matrix[0].empty()) return false;
+  public:
+    bool searchMatrix(vector<vector<int>> &matrix, int target) {
+        if (matrix.empty() || matrix[0].empty())
+            return false;
+        
+        int row = matrix.size() - 1;
+        int col = 0;
 
-    int n = matrix.size() - 1;
-    int m = 0;
+        while(row >= 0 && col < matrix[0].size()) {
+            if (matrix[row][col] == target) return true;
 
-    while (n >= 0 && m <= matrix[0].size() - 1) {
-      if (matrix[n][m] > target) {
-        n--;
-      } else if (matrix[n][m] < target) {
-        m++;
-      } else {
-        return true;
-      }
+            if (matrix[row][col] < target) {
+                col++;
+            } else {
+                row--;
+            }
+        }
+        return false;
     }
-
-    return false;
-  }
 };
 // @lc code=end
