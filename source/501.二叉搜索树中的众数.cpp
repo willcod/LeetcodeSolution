@@ -18,32 +18,36 @@ class Solution {
    public:
     vector<int> findMode(TreeNode* root) {
         vector<int> res;
-        int preVal = 0, currFreq = 0, maxFreq = 0;
-        morrisInorder(res, root, preVal, currFreq, maxFreq);
+        int count = 0;
+        int maxCount = 0;
+        int preVal = 0;
+        travel(root, res, preVal, count, maxCount);
         return res;
     }
 
-    void morrisInorder(vector<int>& res, TreeNode* root, int& preVal,
-                       int& currFreq, int& maxFreq) {
+    void travel(TreeNode* root, vector<int>& res, int& preVal, int& count,
+                int& maxCount) {
         if (!root) return;
 
-        morrisInorder(res, root->left, preVal, currFreq, maxFreq);
-        if (preVal == root->val)
-            currFreq++;
-        else
-            currFreq = 1;
+        travel(root->left, res, preVal, count, maxCount);
 
-        if (currFreq > maxFreq) {
+        if (root->val == preVal) {
+            count++;
+        } else {
+            count = 1;
+        }
+
+        if (count > maxCount) {
+            maxCount = count;
             res.clear();
-            maxFreq = currFreq;
             res.push_back(root->val);
-        } else if (currFreq == maxFreq) {
+        } else if (count == maxCount) {
             res.push_back(root->val);
         }
 
         preVal = root->val;
 
-        morrisInorder(res, root->right, preVal, currFreq, maxFreq);
+        travel(root->right, res, preVal, count, maxCount);
     }
 };
 // @lc code=end
