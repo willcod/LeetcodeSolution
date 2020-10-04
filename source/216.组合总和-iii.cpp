@@ -6,32 +6,32 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     vector<vector<int>> combinationSum3(int k, int n) {
+        if (n < k) return {};
+
         vector<vector<int>> res;
         vector<int> path;
-
         vector<int> nums;
         for (int i = 1; i <= 9; i++) {
             nums.push_back(i);
         }
-
-        combination(res, path, nums, k, n, 0);
+        combinationSum3(res, path, nums, k, n, 0);
         return res;
     }
 
-    void combination(vector<vector<int>>&res, vector<int>& path, vector<int>& nums, int k, int n, int index) {
-        if (n == 0 && path.size() == k) {
+    void combinationSum3(vector<vector<int>>& res, vector<int>& path,
+                         vector<int>& nums, int k, int n, int index) {
+        if (path.size() == k && n == 0) {
             res.push_back(path);
             return;
         }
 
         for (int i = index; i < nums.size(); i++) {
             path.push_back(nums[i]);
-            combination(res, path, nums, k, n - nums[i], i + 1);
+            combinationSum3(res, path, nums, k, n - nums[i], i + 1);
             path.pop_back();
         }
     }
 };
 // @lc code=end
-

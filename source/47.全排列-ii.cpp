@@ -3,62 +3,37 @@
  *
  * [47] 全排列 II
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
-  vector<vector<int>> results;
-
- public:
-  vector<vector<int>> permuteUnique(vector<int>& nums) {
-    vector<bool> used(nums.size(), false);
-    vector<int> sub;
-    sort(nums.begin(), nums.end());
-    backtracking(nums, used, sub, 0);
-    return results;
-  }
-
-  void backtracking(vector<int>& nums, vector<bool>& used, vector<int>& sub,
-                    int pos) {
-    if (pos == nums.size()) {
-      results.push_back(sub);
-      return;
+   public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        vector<int> path;
+        vector<bool> visited(nums.size(), false);
+        permute(res, path, visited, nums);
+        return res;
     }
 
-    for (int i = 0; i < nums.size(); i++) {
-      if (used[i]) continue;
-      if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue;
+    void permute(vector<vector<int>>& res, vector<int>& path,
+                 vector<bool>& visited, vector<int>& nums) {
+        if (path.size() == nums.size()) {
+            res.push_back(path);
+            return;
+        }
 
-      sub.push_back(nums[i]);
-      used[i] = true;
-      backtracking(nums, used, sub, pos + 1);
-      sub.pop_back();
-      used[i] = false;
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) continue;
+
+            if (visited[i] == false) {
+                path.push_back(nums[i]);
+                visited[i] = true;
+                permute(res, path, visited, nums);
+                path.pop_back();
+                visited[i] = false;
+            }
+        }
     }
-  }
 };
 // @lc code=end
-class Solution {
- public:
-  vector<vector<int>> permuteUnique(vector<int>& nums) {
-    vector<vector<int>> results;
-    getPermuteUnique(results, nums, 0, nums.size() - 1);
-    return results;
-  }
-
-  void getPermuteUnique(vector<vector<int>>& results, vector<int>& nums,
-                        int start, int end) {
-    if (start == end) {
-      results.push_back(nums);
-      return;
-    }
-
-    unordered_set<int> set;
-    for (int i = start; i <= end; i++) {
-      if (set.count(nums[i]) == 1) continue;
-      set.insert(nums[i]);
-      swap(nums[i], nums[start]);
-      getPermuteUnique(results, nums, start + 1, end);
-      swap(nums[i], nums[start]);
-    }
-  }
-};

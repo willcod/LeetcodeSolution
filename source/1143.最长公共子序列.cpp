@@ -6,25 +6,24 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     int longestCommonSubsequence(string text1, string text2) {
-        int l1 = text1.length();
-        int l2 = text2.length();
+        int m = text1.length();
+        int n = text2.length();
 
-        vector<vector<int>> dp(l1+1, vector<int>(l2+1, 0));
+        vector f(m + 1, vector(n + 1, 0));
 
-        for (int i = 1; i <= l1; i++) {
-            for (int j = 1; j <= l2; j++) {
-                if (text1[i-1] == text2[j-1]) {
-                    dp[i][j] = dp[i-1][j-1] + 1;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (text1[i - 1] == text2[j - 1]) {
+                    f[i][j] = f[i - 1][j - 1] + 1;
                 } else {
-                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                    f[i][j] = max({f[i - 1][j - 1], f[i][j - 1], f[i - 1][j]});
                 }
             }
         }
 
-        return dp[l1][l2];
+        return f[m][n];
     }
 };
 // @lc code=end
-
