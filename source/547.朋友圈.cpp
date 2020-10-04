@@ -8,64 +8,57 @@
 
 class JointSet {
    public:
-    JointSet(int n) : count(n), parent(n, 0), size(n, 1) {
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
+    JointSet(int capacity)
+        : _count(capacity), _master(capacity, 0), _size(capacity, 1) {
+        for (int i = 0; i < capacity; i++) {
+            _master[i] = i;
         }
     }
 
-    void Union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if (rootP == rootQ) return;
+    int count() { return _count; }
 
-        if (size[rootP] < size[rootQ]) {
-            parent[rootP] = rootQ;
-            size[rootQ] += size[rootP];
+    void join(int a, int b) {
+        int mA = find(a);
+        int mB = find(b);
+
+        if (mA == mB) return;
+
+        if (_size[mA] < _size[mB]) {
+            _master[mA] = mB;
+            _size[mB] += _size[mA];
         } else {
-            parent[rootQ] = rootP;
-            size[rootP] += size[rootQ];
+            _master[mB] = mA;
+            _size[mA] += _size[mB];
         }
-        count--;
-    }
-
-    bool IsConnected(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-
-        return rootP == rootQ;
-    }
-
-    int Count() { return count; }
-
-   private:
-    int find(int x) {
-        while (parent[x] != x) {
-            parent[x] = parent[parent[x]];
-            x = parent[x];
-        }
-
-        return x;
+        _count--;
     }
 
    private:
-    int count;
-    vector<int> parent;
-    vector<int> size;
+    int find(int a) {
+        while (_master[a] != a) {
+            _master[a] = _master[_master[a]];
+            a = _master[a];
+        }
+        return a;
+    }
+
+   private:
+    int _count;
+    vector<int> _master;
+    vector<int> _size;
 };
-
 class Solution {
    public:
     int findCircleNum(vector<vector<int>>& M) {
-        int n = M.size();
-        JointSet js(n);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                if (M[i][j] == 1) js.Union(i, j);
+        JointSet js(M.size());
+        for (int i = 0; i < M.size(); i++) {
+            for (int j = 0; j < M[0].size(); j++) {
+                if (M[i][j] == 1) {
+                    js.join(i, j);
+                }
             }
         }
-
-        return js.Count();
+        return js.count();
     }
 };
 // @lc code=end

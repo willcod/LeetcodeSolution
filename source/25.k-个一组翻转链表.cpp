@@ -14,30 +14,33 @@
  * };
  */
 class Solution {
-   public:
+public:
     ListNode* reverseKGroup(ListNode* head, int k) {
         ListNode front(0);
         front.next = head;
+        auto cur = &front;
+        auto last = &front;
 
-        auto cur = &front, last = &front;
         int count = 0;
         while (cur) {
-            count++;
             cur = cur->next;
+            count++;
 
             if (count == k && cur) {
-                auto next = last->next;
-                while (--count) {
+                auto mid = last->next;
+
+                while(--count) {
                     auto temp = last->next;
                     last->next = temp->next;
                     temp->next = cur->next;
                     cur->next = temp;
-                }
 
-                last = cur = next;
+                }
+                last = cur = mid;
             }
         }
         return front.next;
     }
 };
 // @lc code=end
+

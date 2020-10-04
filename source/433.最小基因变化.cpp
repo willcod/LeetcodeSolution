@@ -8,46 +8,47 @@
 class Solution {
    public:
     int minMutation(string start, string end, vector<string>& bank) {
-        unordered_set<string> dict({bank.begin(), bank.end()});
-        if (!dict.count(end)) return -1;
+        unordered_set<string> bankSet({bank.begin(), bank.end()});
+        if (!bankSet.count(end)) return -1;
 
         unordered_set<string> head, tail, *phead, *ptail;
         head.insert(start);
         tail.insert(end);
 
-        int ladder = 1;
-        const vector<char> g = {'A', 'C', 'G', 'T'};
+        int change = 1;
+        string types = "ACGT";
 
         while (!head.empty() && !tail.empty()) {
-            if (head.size() < tail.size()) {
+            if (head.size() <= tail.size()) {
                 phead = &head;
                 ptail = &tail;
             } else {
-                phead = &tail;
                 ptail = &head;
+                phead = &tail;
             }
 
-            unordered_set<string> temp;
+            unordered_set<string> next;
             for (auto it = phead->begin(); it != phead->end(); it++) {
                 string gene = *it;
-                for (int i = 0; i < gene.length(); i++) {
-                    char t = gene[i];
-                    for (int j = 0; j < g.size(); j++) {
-                        gene[i] = g[j];
+                for (int i = 0; i < gene.size(); i++) {
+                    char g = gene[i];
+                    for (char t : types) {
+                        gene[i] = t;
 
-                        if (ptail->count(gene)) return ladder;
+                        if (ptail->count(gene)) return change;
 
-                        if (dict.count(gene)) {
-                            temp.insert(gene);
-                            dict.erase(gene);
+                        if (bankSet.count(gene)) {
+                            bankSet.erase(gene);
+                            next.insert(gene);
                         }
                     }
-                    gene[i] = t;
+                    gene[i] = g;
                 }
             }
-            ladder++;
-            phead->swap(temp);
+            phead->swap(next);
+            change++;
         }
+
         return -1;
     }
 };
