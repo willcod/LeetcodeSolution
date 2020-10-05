@@ -18,25 +18,24 @@
  * };
  */
 class Solution {
-  public:
-    TreeNode *convertBST(TreeNode *root) {
+   public:
+    TreeNode* convertBST(TreeNode* root) {
         if (!root) return NULL;
-
         int sum = 0;
-
-        travel(root, sum);
-        
-        return root;
+        return convert(root, sum);
     }
 
-    void travel(TreeNode* root, int& sum) {
-        if (!root) return;
+    TreeNode* convert(TreeNode* root, int& sum) {
+        if (!root) return NULL;
 
-        travel(root->right, sum);
+        convert(root->right, sum);
+
         sum += root->val;
         root->val = sum;
 
-        travel(root->left, sum);
+        convert(root->left, sum);
+
+        return root;
     }
 };
 // @lc code=end

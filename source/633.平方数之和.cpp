@@ -6,15 +6,13 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     bool judgeSquareSum(int c) {
         for (long a = 0; a * a <= c; a++) {
-            double b = std::sqrt(c - a * a);
-            if (b == (int)b) return true;
+            double b = sqrt(c - a * a);
+            if (b == (long)b) return true;
         }
-
         return false;
     }
 };
 // @lc code=end
-
