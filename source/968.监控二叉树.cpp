@@ -17,29 +17,31 @@
 class Solution {
    public:
     int minCameraCover(TreeNode* root) {
-        if (!root) return 0;
+        int sum = 0;
+        if (travel(root, sum) == 0) {
+            sum++;
+        }
 
-        int count = 0;
-        if (cover(root, count) == 0) count++;
-        return count;
+        return sum;
     }
 
-    int cover(TreeNode* root, int& count) {
+    int travel(TreeNode* root, int& sum) {
         if (!root) return 2;
 
-        int left = cover(root->left, count);
-        int right = cover(root->right, count);
-
-        if (left == 2 && right == 2) return 0;
-
+        int left = travel(root->left, sum);
+        int right = travel(root->right, sum);
 
         if (left == 0 || right == 0) {
-            count++;
+            sum++;
             return 1;
         }
-        if (left == 1 || right == 1) {
-            return 2;
+
+        if (left == 1 || right == 1) return 2;
+
+        if (left == 2 && right == 2) {
+            return 0;
         }
+
         return -1;
     }
 };

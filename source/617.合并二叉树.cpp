@@ -15,7 +15,7 @@
  * };
  */
 class Solution {
-public:
+   public:
     TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
         if (!t1) return t2;
         if (!t2) return t1;
@@ -29,4 +29,3 @@ public:
     }
 };
 // @lc code=end
-

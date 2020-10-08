@@ -24,34 +24,37 @@ public:
 */
 
 class Solution {
-public:
+   public:
     Node* connect(Node* root) {
         if (!root) return NULL;
 
         queue<Node*> q;
         q.push(root);
 
-        while(!q.empty()) {
+        while (!q.empty()) {
+            Node *pre, *cur;
             int len = q.size();
-            Node *node, *preNode;
             for (int i = 0; i < len; i++) {
                 if (i == 0) {
-                    preNode = q.front();
+                    pre = q.front();
                     q.pop();
-                    node = preNode;
+
+                    cur = pre;
                 } else {
-                    node = q.front();
+                    cur = q.front();
                     q.pop();
-                    preNode->next = node;
-                    preNode = preNode->next;
+
+                    pre->next = cur;
+                    pre = pre->next;
                 }
-                if (node->left) q.push(node->left);
-                if (node->right) q.push(node->right);
+
+                if (cur->left) q.push(cur->left);
+                if (cur->right) q.push(cur->right);
             }
-            preNode->next = NULL;
+            pre->next = NULL;
         }
+
         return root;
     }
 };
 // @lc code=end
-
