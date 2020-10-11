@@ -10,11 +10,12 @@ class LRUCache {
     LRUCache(int capacity) : _capacity(capacity) {}
 
     int get(int key) {
-        auto it = _hashMap.find(key);
-        if (it != _hashMap.end()) {
+        auto it = _hash.find(key);
+        if (it != _hash.end()) {
             _keyList.erase(it->second.second);
             _keyList.push_back(key);
-            _hashMap[key].second = --_keyList.end();
+            _hash[key].second = --_keyList.end();
+
             return it->second.first;
         }
         return -1;
@@ -22,16 +23,16 @@ class LRUCache {
 
     void put(int key, int value) {
         if (get(key) != -1) {
-            _hashMap[key].first = value;
+            _hash[key].first = value;
             return;
         }
 
-        if (_hashMap.size() < _capacity) {
+        if (_hash.size() < _capacity) {
             insert(key, value);
         } else {
             int removeKey = _keyList.front();
             _keyList.pop_front();
-            _hashMap.erase(removeKey);
+            _hash.erase(removeKey);
             insert(key, value);
         }
     }
@@ -39,13 +40,13 @@ class LRUCache {
    private:
     void insert(int key, int value) {
         _keyList.push_back(key);
-        _hashMap[key] = {value, --_keyList.end()};
+        _hash[key] = {value, --_keyList.end()};
     }
 
    private:
     int _capacity;
     list<int> _keyList;
-    unordered_map<int, pair<int, list<int>::iterator>> _hashMap;
+    unordered_map<int, pair<int, list<int>::iterator>> _hash;
 };
 
 /**
