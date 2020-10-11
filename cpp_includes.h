@@ -99,6 +99,7 @@ class Node {
     Node *left;
     Node *right;
     Node *next;
+    Node *random;
 
     Node() : val(0), left(NULL), right(NULL), next(NULL) {}
 
