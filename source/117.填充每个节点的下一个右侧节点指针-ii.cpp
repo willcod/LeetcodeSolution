@@ -31,29 +31,27 @@ class Solution {
         queue<Node*> q;
         q.push(root);
 
+        Node *node, *pre;
+
         while (!q.empty()) {
-            Node *pre, *cur;
-            int len = q.size();
-            for (int i = 0; i < len; i++) {
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
                 if (i == 0) {
                     pre = q.front();
                     q.pop();
-
-                    cur = pre;
+                    node = pre;
                 } else {
-                    cur = q.front();
+                    node = q.front();
                     q.pop();
-
-                    pre->next = cur;
+                    pre->next = node;
                     pre = pre->next;
-                }
+                                }
 
-                if (cur->left) q.push(cur->left);
-                if (cur->right) q.push(cur->right);
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
             }
             pre->next = NULL;
         }
-
         return root;
     }
 };
