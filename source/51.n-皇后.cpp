@@ -1,49 +1,38 @@
 /*
  * @lc app=leetcode.cn id=51 lang=cpp
  *
- * [51] N 皇后
+ * [51] N皇后
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  vector<vector<string>> solveNQueens(int n) {
-    vector<vector<string>> res;
-    vector<string> nQueens(n, string(n, '.'));
-    backtracking(res, nQueens, n, 0);
-    return res;
-  }
+  public:
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> res;
+        vector<string> nQueens(n, string(n, '.'));
 
-  void backtracking(vector<vector<string>>& res, vector<string>& nQueens, int n,
-                    int row) {
-    if (row == n) {
-      res.push_back(nQueens);
-      return;
+        solve(res, nQueens, n, 0, 0, 0, 0);
+
+        return res;
     }
 
-    for (int col = 0; col < n; col++) {
-      if (isValid(nQueens, n, row, col)) {
-        nQueens[row][col] = 'Q';
-        backtracking(res, nQueens, n, row + 1);
-        nQueens[row][col] = '.';
-      }
-    }
-  }
+    void solve(vector<vector<string>> &res, vector<string> &nQueens, int n,
+               int row, int col_bit, int diag45_bit, int diag135_bit) {
+        if (row == n) {
+            res.push_back(nQueens);
+            return;
+        }
 
-  bool isValid(vector<string>& nQueens, int n, int row, int col) {
-    for (int i = 0; i < row; i++) {
-      if (nQueens[i][col] == 'Q') return false;
+        int mask = col_bit | diag45_bit | diag135_bit;
+        for (int i = 0, b = 1; i < n; i++, b <<= 1) {
+            if (!(mask & b)) {
+                nQueens[row][i] = 'Q';
+                solve(res, nQueens, n, row + 1, col_bit | b,
+                      (diag45_bit | b) << 1, (diag135_bit | b) >> 1);
+                nQueens[row][i] = '.';
+            }
+        }
     }
-
-    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-      if (nQueens[i][j] == 'Q') return false;
-    }
-
-    for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
-      if (nQueens[i][j] == 'Q') return false;
-    }
-
-    return true;
-  }
 };
 // @lc code=end
+

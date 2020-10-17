@@ -6,16 +6,15 @@
 #include "cpp_includes.h"
 // @lc code=start
 class LRUCache {
-   public:
+  public:
     LRUCache(int capacity) : _capacity(capacity) {}
 
     int get(int key) {
-        auto it = _hash.find(key);
-        if (it != _hash.end()) {
+        auto it = _hashMap.find(key);
+        if (it != _hashMap.end()) {
             _keyList.erase(it->second.second);
             _keyList.push_back(key);
-            _hash[key].second = --_keyList.end();
-
+            _hashMap[key].second = --_keyList.end();
             return it->second.first;
         }
         return -1;
@@ -23,30 +22,27 @@ class LRUCache {
 
     void put(int key, int value) {
         if (get(key) != -1) {
-            _hash[key].first = value;
-            return;
-        }
-
-        if (_hash.size() < _capacity) {
-            insert(key, value);
+            _hashMap[key].first = value;
         } else {
-            int removeKey = _keyList.front();
-            _keyList.pop_front();
-            _hash.erase(removeKey);
+            if (_keyList.size() == _capacity) {
+                int removeKey = _keyList.front();
+                _keyList.pop_front();
+                _hashMap.erase(removeKey);
+            }
             insert(key, value);
         }
     }
 
-   private:
+  private:
     void insert(int key, int value) {
         _keyList.push_back(key);
-        _hash[key] = {value, --_keyList.end()};
+        _hashMap[key] = {value, --_keyList.end()};
     }
 
-   private:
+  private:
     int _capacity;
     list<int> _keyList;
-    unordered_map<int, pair<int, list<int>::iterator>> _hash;
+    unordered_map<int, pair<int, list<int>::iterator>> _hashMap;
 };
 
 /**

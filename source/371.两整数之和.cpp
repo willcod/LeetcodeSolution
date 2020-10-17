@@ -6,15 +6,15 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     int getSum(int a, int b) {
         while (b) {
             auto carry = (unsigned)(a & b) << 1;
             a ^= b;
             b = carry;
         }
-
         return a;
     }
 };
 // @lc code=end
+
