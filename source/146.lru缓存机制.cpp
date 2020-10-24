@@ -7,42 +7,45 @@
 // @lc code=start
 class LRUCache {
   public:
-    LRUCache(int capacity) : _capacity(capacity) {}
+    LRUCache(int capacity) : n(capacity) {}
 
     int get(int key) {
-        auto it = _hashMap.find(key);
-        if (it != _hashMap.end()) {
-            _keyList.erase(it->second.second);
-            _keyList.push_back(key);
-            _hashMap[key].second = --_keyList.end();
+        auto it = hash.find(key);
+        if (it != hash.end()) {
+            keylist.erase(it->second.second);
+            keylist.push_back(key);
+            hash[key].second = --keylist.end();
+
             return it->second.first;
         }
+
         return -1;
     }
 
     void put(int key, int value) {
         if (get(key) != -1) {
-            _hashMap[key].first = value;
-        } else {
-            if (_keyList.size() == _capacity) {
-                int removeKey = _keyList.front();
-                _keyList.pop_front();
-                _hashMap.erase(removeKey);
-            }
-            insert(key, value);
+            hash[key].first = value;
+            return;
         }
+
+        if (hash.size() == n) {
+            auto removekey = keylist.front();
+            keylist.pop_front();
+            hash.erase(removekey);
+        }
+        insert(key, value);
     }
 
   private:
     void insert(int key, int value) {
-        _keyList.push_back(key);
-        _hashMap[key] = {value, --_keyList.end()};
+        keylist.push_back(key);
+        hash[key] = {value, --keylist.end()};
     }
 
   private:
-    int _capacity;
-    list<int> _keyList;
-    unordered_map<int, pair<int, list<int>::iterator>> _hashMap;
+    int n;
+    list<int> keylist;
+    unordered_map<int, pair<int, list<int>::iterator>> hash;
 };
 
 /**

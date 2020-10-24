@@ -8,20 +8,16 @@
 class Solution {
    public:
     vector<int> sortedSquares(vector<int>& A) {
-        int n = A.size();
-
-        vector<int> res(n, 0);
-
         int left = 0;
-        int right = n - 1;
+        int right = A.size() - 1;
 
-        for (int i = n - 1; i >= 0; i--) {
-            if (abs(A[right] > abs(A[left]))) {
-                res[i] = pow(A[right--], 2);
-            } else {
-                res[i] = pow(A[left++], 2);
-            }
+        vector<int> res(A.size(), 0);
+
+        for (int i = A.size() - 1; i >= 0; i--) {
+            res[i] = pow(A[i], 2);
         }
+
+        sort(res.begin(), res.end());
 
         return res;
     }

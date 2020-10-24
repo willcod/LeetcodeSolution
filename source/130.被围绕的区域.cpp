@@ -10,40 +10,39 @@ class Solution {
     void solve(vector<vector<char>>& board) {
         if (board.empty() || board[0].empty()) return;
 
-        int m = board.size();
-        int n = board[0].size();
+        int rows = board.size();
+        int cols = board[0].size();
 
-        for (int i = 0; i < m; i++) {
-            flood(board, i, 0);
-            flood(board, i, n - 1);
+        for (int i = 0; i < rows; i++) {
+            fill(board, i, 0);
+            fill(board, i, cols - 1);
         }
 
-        for (int i = 0; i < n; i++) {
-            flood(board, 0, i);
-            flood(board, m - 1, i);
+        for (int i = 0; i < cols; i++) {
+            fill(board, 0, i);
+            fill(board, rows - 1, i);
         }
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (board[i][j] == 'A') {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (board[i][j] == 'A')
                     board[i][j] = 'O';
-                } else if (board[i][j] == 'O') {
+                else if (board[i][j] == 'O') {
                     board[i][j] = 'X';
                 }
             }
         }
     }
 
-    void flood(vector<vector<char>>& board, int x, int y) {
+    void fill(vector<vector<char>>& board, int x, int y) {
         if (!isValid(board, x, y)) return;
+        if (board[x][y] != 'O') return;
 
-        if (board[x][y] == 'O') {
-            board[x][y] = 'A';
-            flood(board, x - 1, y);
-            flood(board, x + 1, y);
-            flood(board, x, y - 1);
-            flood(board, x, y + 1);
-        }
+        board[x][y] = 'A';
+        fill(board, x - 1, y);
+        fill(board, x + 1, y);
+        fill(board, x, y - 1);
+        fill(board, x, y + 1);
     }
 
     bool isValid(vector<vector<char>>& board, int x, int y) {
