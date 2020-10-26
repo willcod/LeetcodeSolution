@@ -12,7 +12,7 @@ public:
     int val;
     Node* next;
     Node* random;
-
+    
     Node(int _val) {
         val = _val;
         next = NULL;
@@ -22,7 +22,7 @@ public:
 */
 
 class Solution {
-   public:
+public:
     Node* copyRandomList(Node* head) {
         if (!head) return NULL;
 
@@ -35,9 +35,10 @@ class Solution {
 
         cur = head;
         while (cur) {
-            auto newNode = hash[cur];
-            newNode->next = hash[cur->next];
-            newNode->random = hash[cur->random];
+            auto node = hash[cur];
+            node->next = hash[cur->next];
+            node->random = hash[cur->random];
+
             cur = cur->next;
         }
 
@@ -45,3 +46,4 @@ class Solution {
     }
 };
 // @lc code=end
+

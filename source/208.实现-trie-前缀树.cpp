@@ -6,22 +6,19 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Trie {
-    bool _isEnd;
-    vector<Trie *> _next;
-
-   public:
+  public:
     /** Initialize your data structure here. */
-    Trie() : _isEnd(false), _next(26, NULL) {}
-    ~Trie() {
-        for (auto n : _next) {
-            if (n) delete n;
-        }
+    Trie() {
+        _isEnd = false;
+        memset(_next, NULL, sizeof(_next));
     }
+
     /** Inserts a word into the trie. */
     void insert(string word) {
         auto t = this;
-        for (char c : word) {
-            if (t->_next[c - 'a'] == NULL) t->_next[c - 'a'] = new Trie();
+        for (auto c : word) {
+            if (t->_next[c - 'a'] == NULL)
+                t->_next[c - 'a'] = new Trie();
             t = t->_next[c - 'a'];
         }
         t->_isEnd = true;
@@ -30,9 +27,10 @@ class Trie {
     /** Returns if the word is in the trie. */
     bool search(string word) {
         auto t = this;
-        for (char c : word) {
-            if (t->_next[c - 'a'] == NULL) return false;
+        for (auto c : word) {
             t = t->_next[c - 'a'];
+            if (t == NULL)
+                return false;
         }
         return t->_isEnd;
     }
@@ -41,12 +39,17 @@ class Trie {
      * prefix. */
     bool startsWith(string prefix) {
         auto t = this;
-        for (char c : prefix) {
-            if (t->_next[c - 'a'] == NULL) return false;
+        for (auto c : prefix) {
             t = t->_next[c - 'a'];
+            if (t == NULL)
+                return false;
         }
         return true;
     }
+
+  private:
+    bool _isEnd;
+    Trie *_next[26];
 };
 
 /**

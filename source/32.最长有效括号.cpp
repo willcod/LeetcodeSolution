@@ -6,22 +6,25 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+  public:
     int longestValidParentheses(string s) {
-        int n = s.length();
-
-        int maxlen = 0;
-
-        vector f(n + 1, 0);
-        for (int i = 1; i < n; i++) {
-            if (s[i] == ')' && i - f[i] && s[i - f[i] - 1] == '(') {
-                f[i + 1] = f[i] + f[i - f[i] - 1] + 2;
+        stack<int> stk;
+        stk.push(-1);
+        int length = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '(') {
+                stk.push(i);
+            } else {
+                stk.pop();
+                if (stk.empty()) {
+                    stk.push(i);
+                } else {
+                    length = max(length, i - stk.top());
+                }
             }
-
-            maxlen = max(maxlen, f[i + 1]);
         }
 
-        return maxlen;
+        return length;
     }
 };
 // @lc code=end

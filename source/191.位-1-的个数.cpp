@@ -6,15 +6,15 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     int hammingWeight(uint32_t n) {
-        int count = 0;
+        int sum = 0;
         while (n) {
-            count++;
-            n &= n - 1;
+            n &= (n -1);
+            sum++;
         }
-
-        return count;
+        return sum;
     }
 };
 // @lc code=end
+
