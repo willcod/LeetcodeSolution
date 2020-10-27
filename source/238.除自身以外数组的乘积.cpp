@@ -6,25 +6,18 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
-    vector<int> productExceptSelf(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> output(n, 1);
-
-        int fromBegin = 1;
-        for (int i = 0; i < n; i++) {
-            output[i] *= fromBegin;
-            fromBegin *= nums[i];
+  public:
+    vector<int> productExceptSelf(vector<int> &nums) {
+        vector<int> res(nums.size(), 1);
+        int left = 1;
+        int right = 1;
+        for (int i = 0, j = nums.size() - 1; i < nums.size(); i++, j--) {
+            res[i] *= left;
+            res[j] *= right;
+            left *= nums[i];
+            right *= nums[j];
         }
-
-        int fromEnd = 1;
-        for (int i = n - 1; i >= 0; i--) {
-            output[i] *= fromEnd;
-            fromEnd *= nums[i];
-        }
-
-        return output;
+        return res;
     }
 };
 // @lc code=end
-
