@@ -8,33 +8,29 @@
 class Solution {
    public:
     string longestPalindrome(string s) {
-        if (s.length() <= 1) return s;
+        if (s.length() < 2) return s;
+        int n = s.length() - 1;
+        int lo = 0;
+        int max_len = 1;
 
-        int min_left = 0;
-        int max_right = s.length() - 1;
-        int max_len = 0;
-
-        for (int mid = 0; mid < s.length();) {
+        int mid = 0;
+        while (mid < n) {
             int left = mid;
             int right = mid;
-
-            while (right < max_right && s[right] == s[right + 1]) right++;
+            while (right < n && s[right + 1] == s[right]) right++;
             mid = right + 1;
-
-            while (right < max_right && left > 0 &&
-                   s[left - 1] == s[right + 1]) {
+            while (right < n && left > 0 && s[left - 1] == s[right + 1]) {
                 left--;
                 right++;
             }
 
-            int new_len = right - left + 1;
-            if (new_len > max_len) {
-                max_len = new_len;
-                min_left = left;
+            int len = right - left + 1;
+            if (len > max_len) {
+                max_len = len;
+                lo = left;
             }
         }
-
-        return s.substr(min_left, max_len);
+        return s.substr(lo, max_len);
     }
 };
 // @lc code=end
