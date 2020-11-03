@@ -13,20 +13,22 @@ class Solution {
         int n = s.length();
         int pos = 0;
 
-        for (int left = 0; left < n; left++) {
-            if (s[left] != ' ') {
+        for (int i = 0; i < n; i++) {
+            if (s[i] != ' ') {
                 if (pos > 0) {
                     s[pos++] = ' ';
                 }
 
-                int right = left;
-                while (right < n && s[right] != ' ') {
-                    s[pos++] = s[right++];
+                int j = i;
+                while (j < n && s[j] != ' ') {
+                    s[pos++] = s[j++];
                 }
-                reverse(s.begin() + pos - (right - left), s.begin() + pos);
-                left = right;
+
+                reverse(s.begin() + pos - (j - i), s.begin() + pos);
+                i = j;
             }
         }
+
         s.erase(s.begin() + pos, s.end());
         return s;
     }

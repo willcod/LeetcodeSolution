@@ -15,24 +15,23 @@
  * };
  */
 class Solution {
-   private:
    public:
     int getMinimumDifference(TreeNode* root) {
-        if (!root) return 0;
+        int min = INT_MAX;
         int pre = -1;
-        int minDiff = INT_MAX;
 
-        getMinDiff(root, pre, minDiff);
-        return minDiff;
+        getMin(root, pre, min);
+        return min;
     }
 
-    void getMinDiff(TreeNode* root, int& pre, int& minDiff) {
+    void getMin(TreeNode* root, int& pre, int& min) {
         if (!root) return;
 
-        getMinDiff(root->left, pre, minDiff);
-        if (pre >= 0) minDiff = min(minDiff, (root->val - pre));
+        getMin(root->left, pre, min);
+        if (pre >= 0) min = std::min(min, root->val - pre);
         pre = root->val;
-        getMinDiff(root->right, pre, minDiff);
+
+        getMin(root->right, pre, min);
     }
 };
 // @lc code=end
