@@ -3,25 +3,23 @@
  *
  * [52] N皇后 II
  */
-#include "cpp_includes.h"
+
 // @lc code=start
 class Solution {
-  public:
+   public:
     int totalNQueens(int n) { return solve(n, 0, 0, 0, 0); }
 
-    int solve(int n, int row, int col, int diag1, int diag2) {
-        if (row == n)
-            return 1;
+    int solve(int n, int row, int col, int diag45, int diag135) {
+        if (row == n) return 1;
 
+        int available = ((1 << n) - 1) & (~(col | diag45 | diag135));
         int count = 0;
-        int avaliable = ((1 << n) - 1) & (~(col | diag1 | diag2));
+        while (available) {
+            int pos = available & (-available);
+            available = available & (available - 1);
 
-        while (avaliable) {
-            int pos = avaliable & (-avaliable);
-            avaliable = (avaliable - 1) & avaliable;
-
-            count += solve(n, row + 1, col | pos, (diag1 | pos) << 1,
-                           (diag2 | pos) >> 1);
+            count += solve(n, row + 1, col | pos, (diag45 | pos) >> 1,
+                           (diag135 | pos) << 1);
         }
 
         return count;

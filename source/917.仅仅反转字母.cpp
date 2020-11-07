@@ -8,18 +8,16 @@
 class Solution {
    public:
     string reverseOnlyLetters(string S) {
-        //双指针，跳过非字母，
         int left = 0;
         int right = S.length() - 1;
 
         while (left < right) {
-            if (!isalpha(S[left])) left++;
-            if (!isalpha(S[right])) right--;
+            while (left < right && !isalpha(S[left])) left++;
+            while (left < right && !isalpha(S[right])) right--;
 
-            if (isalpha(S[left]) && isalpha(S[right])) {
-                swap(S[left++], S[right--]);
-            }
+            swap(S[left++], S[right--]);
         }
+
         return S;
     }
 };
