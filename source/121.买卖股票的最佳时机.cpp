@@ -8,15 +8,15 @@
 class Solution {
    public:
     int maxProfit(vector<int>& prices) {
-        int profit = 0;
-        int minP = INT_MAX;
+        if (prices.empty()) return 0;
+        int max = 0;
+        int min = prices[0];
 
-        for (int i = 0; i < prices.size(); i++) {
-            profit = max(profit, prices[i] - minP);
-            minP = min(prices[i], minP);
+        for (int i = 1; i < prices.size(); i++) {
+            max = std::max(max, prices[i] - min);
+            min = std::min(min, prices[i]);
         }
-
-        return profit;
+        return max;
     }
 };
 // @lc code=end

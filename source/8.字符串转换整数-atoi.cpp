@@ -12,17 +12,17 @@ class Solution {
 
         if (s.empty() || i == -1) return 0;
 
-        int result = 0;
         int sign = 1;
-
+        if (s[i] == '+' || s[i] == '-') sign = s[i++] == '+'?1:-1;
         int base = INT_MAX / 10;
-
-        if (s[i] == '+' || s[i] == '-') sign = s[i++] == '+' ? 1 : -1;
+        int result = 0;
 
         while (isdigit(s[i])) {
-            if (result > base || (result == base && s[i] - '0' > 7))
+            if (result > base || (result ==base && (s[i] - '0' > 7))) {
                 return sign > 0 ? INT_MAX : INT_MIN;
-            result = 10 * result + (s[i++] - '0');
+            }
+
+            result = result * 10 + (s[i++] - '0');
         }
 
         return sign * result;

@@ -16,7 +16,9 @@ class Solution {
                 swap(nums[i], nums[p2--]);
             }
 
-            if (nums[i] == 0) swap(nums[i], nums[p0++]);
+            if (nums[i] == 0) {
+                swap(nums[i], nums[p0++]);
+            }
         }
     }
 };

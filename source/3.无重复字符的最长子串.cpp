@@ -6,26 +6,23 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     int lengthOfLongestSubstring(string s) {
-        if (s.empty()) return 0;
-
-        int left = 0, right =0, maxlen = 0;
-
-        unordered_set<char> set;
+        int left = 0;
+        int right = 0;
+        unordered_set<char> ss;
+        int maxCount = 0;
         while (left < s.length() && right < s.length()) {
-            if (set.count(s[right]) == 0) {
-                set.insert(s[right]);
+            if (!ss.count(s[right])) {
+                ss.insert(s[right]);
                 right++;
-                maxlen = max(maxlen, right - left);
+                maxCount = max(maxCount, right - left);
             } else {
-                set.erase(s[left]);
+                ss.erase(s[left]);
                 left++;
             }
         }
-
-        return maxlen;
+        return maxCount;
     }
 };
 // @lc code=end
-
