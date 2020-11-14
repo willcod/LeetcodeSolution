@@ -8,22 +8,21 @@
 class Solution {
    public:
     int findLength(vector<int>& A, vector<int>& B) {
-        int lenA = A.size();
-        int lenB = B.size();
+        int m = A.size();
+        int n = B.size();
 
-        vector f(lenA + 1, vector(lenB + 1, 0));
-        int len = 0;
-        for (int i = 1; i <= lenA; i++) {
-            for (int j = 1; j <= lenB; j++) {
+        vector f(m + 1, vector(n + 1, 0));
+        int maxlen = 0;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
                 if (A[i - 1] == B[j - 1]) {
                     f[i][j] = f[i - 1][j - 1] + 1;
+                    maxlen = max(maxlen, f[i][j]);
                 }
-
-                len = max(len, f[i][j]);
             }
         }
 
-        return len;
+        return maxlen;
     }
 };
 // @lc code=end

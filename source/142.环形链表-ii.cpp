@@ -21,19 +21,18 @@ class Solution {
         auto fast = head;
         auto slow = head;
 
-        while (fast != NULL && fast->next != NULL) {
-            slow = slow->next;
+        while (fast && fast->next) {
             fast = fast->next->next;
+            slow = slow->next;
 
-            if (slow == fast) {
+            if (fast == slow) {
                 auto begin = head;
 
-                while (begin != slow) {
-                    begin = begin->next;
+                while (slow != begin) {
                     slow = slow->next;
+                    begin = begin->next;
                 }
-
-                return begin;
+                return slow;
             }
         }
 

@@ -35,7 +35,6 @@ class RandomizedCollection {
             if (m[val].empty()) m.erase(val);
             nums.pop_back();
         }
-
         return result;
     }
 
