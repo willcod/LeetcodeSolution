@@ -16,9 +16,9 @@ public:
         vector f(n, 0);
         f[0] = 0;
         f[1] = min(cost[0], cost[1]);
-
         for (int i = 2; i < n; i++) {
-            f[i] = min(f[i-1] + cost[i], f[i-2] + cost[i-1]);
+            cout << i << endl;
+            f[i] = min(f[i-2]+cost[i-1], f[i-1]+cost[i]);
         }
 
         return f[n-1];
