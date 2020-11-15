@@ -3,7 +3,7 @@
  *
  * [70] 爬楼梯
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
  public:
@@ -11,17 +11,33 @@ class Solution {
     if (n == 1) return 1;
     if (n == 2) return 2;
 
-    int oneStep = 2;
-    int twoStep = 1;
-    int allStep = 0;
+    int one = 1;
+    int two = 2;
+    int sum = 0;
 
     for (int i = 3; i <= n; i++) {
-      allStep = oneStep + twoStep;
-      twoStep = oneStep;
-      oneStep = allStep;
+      sum = one + two;
+      one = two;
+      two = sum;
     }
 
-    return allStep;
+    return sum;
   }
 };
 // @lc code=end
+class Solution {
+ public:
+  int climbStairs(int n) {
+    vector memo(n + 1, 0);
+    return climb(n, memo);
+  }
+
+  int climb(int n, vector<int>& memo) {
+    if (n == 0 || n == 1) return 1;
+    if (n == 2) return 2;
+    if (memo[n]) return memo[n];
+
+    int stairs = climb(n - 1, memo) + climb(n - 2, memo);
+    return memo[n] = stairs;
+  }
+};

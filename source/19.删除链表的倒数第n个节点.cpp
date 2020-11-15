@@ -16,31 +16,27 @@
  * };
  */
 class Solution {
-   public:
+public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        if (!head) return NULL;
-
+        vector<ListNode*> nodeVec;
         ListNode dummy(0);
         dummy.next = head;
-
-        auto front = &dummy;
-        auto back = &dummy;
+        auto node = &dummy;
 
         for (int i = 0; i < n; i++) {
-            front = front->next;
+            node = node->next;
         }
 
-        while (front->next) {
-            front = front->next;
+        auto back = &dummy;
+        while (node->next) {
+            node = node->next;
             back = back->next;
         }
 
-        auto skipNode = back->next;
         back->next = back->next->next;
-
-        delete skipNode;
-
+        
         return dummy.next;
     }
 };
 // @lc code=end
+
