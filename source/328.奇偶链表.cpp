@@ -18,11 +18,12 @@
 class Solution {
    public:
     ListNode* oddEvenList(ListNode* head) {
-        if (!head) return head;
+        if (!head) return NULL;
 
         auto evenHead = head->next;
         auto odd = head;
         auto even = head->next;
+
         while (even && even->next) {
             odd->next = even->next;
             odd = odd->next;
@@ -30,6 +31,7 @@ class Solution {
             even = even->next;
         }
         odd->next = evenHead;
+
         return head;
     }
 };

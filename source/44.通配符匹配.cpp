@@ -8,27 +8,26 @@
 class Solution {
    public:
     bool isMatch(string s, string p) {
+        int m = s.length();
         int n = p.length();
 
-        int i = 0, j = 0, star = -1, match = 0;
+        vector f(m + 1, vector(n + 1, false));
+        f[0][0] = true;
 
-        while (i < s.length()) {
-            if (j < n && (s[i] == p[j] || p[j] == '?')) {
-                i++;
-                j++;
-            } else if (j < n && p[j] == '*') {
-                match = i;
-                star = j++;
-            } else if (star >= 0) {
-                i = ++match;
-                j = star + 1;
-            } else {
-                return false;
-            }
+        for (int i = 1; i <= n; i++) {
+            f[0][i] = f[0][i - 1] && (p[i - 1] == '*');
         }
 
-        while (j < n && p[j] == '*') j++;
-        return j == n;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s[i - 1] == p[j - 1] || p[j - 1] == '?') {
+                    f[i][j] = f[i - 1][j - 1];
+                } else if (p[j - 1] == '*') {
+                    f[i][j] = f[i][j - 1] || f[i - 1][j];
+                }
+            }
+        }
+        return f[m][n];
     }
 };
 // @lc code=end
