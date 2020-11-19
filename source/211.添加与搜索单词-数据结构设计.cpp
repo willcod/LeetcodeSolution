@@ -3,24 +3,55 @@
  *
  * [211] 添加与搜索单词 - 数据结构设计
  */
-
+#include "cpp_includes.h"
 // @lc code=start
+class TrieNode {
+ public:
+  TrieNode() : isWord(false), children(26, nullptr) {}
+
+  bool isWord;
+  vector<TrieNode*> children;
+};
 class WordDictionary {
-public:
-    /** Initialize your data structure here. */
-    WordDictionary() {
+ public:
+  /** Initialize your data structure here. */
+  WordDictionary() { root = new TrieNode(); }
 
+  /** Adds a word into the data structure. */
+  void addWord(string word) {
+    auto node = root;
+    for (char c : word) {
+      if (node->children[c - 'a'] == nullptr) {
+        node->children[c - 'a'] = new TrieNode();
+      }
+      node = node->children[c - 'a'];
     }
-    
-    /** Adds a word into the data structure. */
-    void addWord(string word) {
 
-    }
-    
-    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
-    bool search(string word) {
+    node->isWord = true;
+  }
 
+  /** Returns if the word is in the data structure. A word could contain the dot
+   * character '.' to represent any one letter. */
+  bool search(string word) { return search(word.c_str(), root); }
+
+  bool search(const char* word, TrieNode* node) {
+    for (int i = 0; word[i] && node; i++) {
+      if (word[i] != '.') {
+        node = node->children[word[i] - 'a'];
+      } else {
+        auto tmp = node;
+        for (int j = 0; j < 26; j++) {
+          node = tmp->children[j];
+          if (search(word + i + 1, node)) return true;
+        }
+      }
     }
+
+    return node && node->isWord;
+  }
+
+ private:
+  TrieNode* root;
 };
 
 /**
@@ -30,4 +61,3 @@ public:
  * bool param_2 = obj->search(word);
  */
 // @lc code=end
-

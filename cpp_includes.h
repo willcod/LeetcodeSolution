@@ -21,7 +21,9 @@
 #include <condition_variable>
 #include <csetjmp>
 #include <csignal>
+#ifdef _WIN32
 #include <cstdalign>
+#endif
 #include <cstdarg>
 #include <cstdbool>
 #include <cstddef>
@@ -31,7 +33,9 @@
 #include <cstring>
 #include <ctgmath>
 #include <ctime>
+#ifdef _WIN32
 #include <cuchar>
+#endif
 #include <cwchar>
 #include <cwctype>
 #include <deque>
