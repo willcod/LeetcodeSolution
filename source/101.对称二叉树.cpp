@@ -15,19 +15,19 @@
  * };
  */
 class Solution {
-   public:
-    bool isSymmetric(TreeNode* root) {
-        if (!root) return true;
+ public:
+  bool isSymmetric(TreeNode* root) {
+    if (!root) return true;
 
-        return isSym(root->left, root->right);
-    }
+    return isMirror(root->left, root->right);
+  }
 
-    bool isSym(TreeNode* left, TreeNode* right) {
-        if (!left && !right) return true;
-        if (!left || !right) return false;
+  bool isMirror(TreeNode* left, TreeNode* right) {
+    if (left == nullptr && right == nullptr) return true;
+    if (left == nullptr || right == nullptr) return false;
 
-        return left->val == right->val && isSym(left->left, right->right) &&
-               isSym(left->right, right->left);
-    }
+    return (left->val == right->val && isMirror(left->left, right->right) &&
+            isMirror(left->right, right->left));
+  }
 };
 // @lc code=end

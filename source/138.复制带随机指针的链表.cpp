@@ -12,7 +12,7 @@ public:
     int val;
     Node* next;
     Node* random;
-    
+
     Node(int _val) {
         val = _val;
         next = NULL;
@@ -22,28 +22,27 @@ public:
 */
 
 class Solution {
-public:
-    Node* copyRandomList(Node* head) {
-        if (!head) return NULL;
+ public:
+  Node* copyRandomList(Node* head) {
+    if (!head) return head;
 
-        unordered_map<Node*, Node*> hash;
-        auto cur = head;
-        while (cur) {
-            hash[cur] = new Node(cur->val);
-            cur = cur->next;
-        }
-
-        cur = head;
-        while (cur) {
-            auto node = hash[cur];
-            node->next = hash[cur->next];
-            node->random = hash[cur->random];
-
-            cur = cur->next;
-        }
-
-        return hash[head];
+    unordered_map<Node*, Node*> cache;
+    auto node = head;
+    while (node) {
+      auto n = new Node(node->val);
+      cache[node] = n;
+      node = node->next;
     }
+
+    node = head;
+    while (node) {
+      auto n = cache[node];
+      n->next = cache[node->next];
+      n->random = cache[node->random];
+      node = node->next;
+    }
+
+    return cache[head];
+  }
 };
 // @lc code=end
-

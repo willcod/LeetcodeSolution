@@ -15,24 +15,22 @@
  * };
  */
 class Solution {
-public:
-    int sumNumbers(TreeNode* root) {
-        if (!root) return 0;
+ public:
+  int sumNumbers(TreeNode* root) {
+    if (!root) return 0;
+    return total(root, 0);
+  }
 
-        return sumNumber(root, 0);
-    }
+  int total(TreeNode* root, int pre) {
+    if (!root) return 0;
+    pre = pre * 10 + root->val;
 
-    int sumNumber(TreeNode* root, int pre) {
-        if (!root) return 0;
-        int num = pre*10+root->val;
-        if (!root->left && !root->right)
-            return num;
+    if (root->left == nullptr && root->right == nullptr) return pre;
 
-        int left = sumNumber(root->left, num);
-        int right = sumNumber(root->right, num);
+    int left = total(root->left, pre);
+    int right = total(root->right, pre);
 
-        return left + right;
-    }
+    return left + right;
+  }
 };
 // @lc code=end
-
