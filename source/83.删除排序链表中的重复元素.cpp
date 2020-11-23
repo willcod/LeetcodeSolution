@@ -14,11 +14,12 @@
  * };
  */
 class Solution {
-public:
+   public:
     ListNode* deleteDuplicates(ListNode* head) {
-        if (!head) return head;
+        if (!head || !head->next) return head;
 
         auto cur = head;
+
         while (cur && cur->next) {
             if (cur->val == cur->next->val) {
                 cur->next = cur->next->next;
@@ -31,4 +32,3 @@ public:
     }
 };
 // @lc code=end
-

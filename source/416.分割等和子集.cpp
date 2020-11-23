@@ -12,17 +12,16 @@ class Solution {
         if (sum % 2) return false;
 
         sum /= 2;
-
-        vector f(sum + 1, false);
+        vector f(sum + 1, 0);
         f[0] = true;
+
         for (int num : nums) {
-            for (int i = sum; i > 0; i--) {
+            for (int i = sum; i >= 0; i--) {
                 if (i >= num) {
                     f[i] = f[i] || f[i - num];
                 }
             }
         }
-
         return f[sum];
     }
 };
