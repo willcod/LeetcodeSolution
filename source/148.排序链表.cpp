@@ -16,11 +16,13 @@
  * };
  */
 class Solution {
-public:
+   public:
     ListNode* sortList(ListNode* head) {
         if (!head || !head->next) return head;
 
-        ListNode *slow = head, *fast = head, *pre = nullptr;
+        auto slow = head;
+        auto fast = head;
+        ListNode* pre = nullptr;
 
         while (fast && fast->next) {
             pre = slow;
@@ -32,21 +34,20 @@ public:
         auto l1 = sortList(head);
         auto l2 = sortList(slow);
 
-        return merge2List(l1, l2);
+        return merge2list(l1, l2);
     }
 
-    ListNode* merge2List(ListNode* l1, ListNode* l2) {
+    ListNode* merge2list(ListNode* l1, ListNode* l2) {
         if (!l1) return l2;
         if (!l2) return l1;
 
         if (l1->val < l2->val) {
-            l1->next = merge2List(l1->next, l2);
+            l1->next = merge2list(l1->next, l2);
             return l1;
         } else {
-            l2->next = merge2List(l2->next, l1);
+            l2->next = merge2list(l2->next, l1);
             return l2;
         }
     }
 };
 // @lc code=end
-
