@@ -6,25 +6,22 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     int maxProfit(vector<int>& prices) {
-        if (prices.empty()) return 0;
-
+        if (prices.size() < 2) return 0;
         int n = prices.size();
-        vector f(n, vector(3, vector(2, 0)));
-        f[0][1][0] = 0;
-        f[0][1][1] = -prices[0];
-        f[0][2][0] = 0;
-        f[0][2][1] = -prices[0];
 
-        for (int i = 1; i < n; i++) {
-            f[i][2][0] = max(f[i - 1][2][0], f[i - 1][2][1] + prices[i]);
-            f[i][2][1] = max(f[i - 1][2][1], f[i - 1][1][0] - prices[i]);
-            f[i][1][0] = max(f[i - 1][1][0], f[i - 1][1][1] + prices[i]);
-            f[i][1][1] = max(f[i - 1][1][1], f[i - 1][0][0] - prices[i]);
+        int K = 2;
+        vector f(K+1, vector(n, 0));
+
+        for (int k = 1; k <=K; k++) {
+            int preBuy = f[k-1][0] - prices[0];
+            for (int i = 1; i < n; i++) {
+                f[k][i] = max(f[k][i-1], prices[i]+preBuy);
+                preBuy = max(f[k-1][i] - prices[i], preBuy);
+            }
         }
-
-        return f[n - 1][2][0];
     }
 };
 // @lc code=end
+

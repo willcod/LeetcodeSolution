@@ -6,24 +6,21 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
-
-// Sort clips first.
-// Then for each clip, update dp[clip[0]] ~ dp[clip[1]].
-
-// Time O(NlogN + NT), Space O(T)
+   public:
     int videoStitching(vector<vector<int>>& clips, int T) {
         sort(clips.begin(), clips.end());
-        vector f(101, 101);
-        f[0] = 0;
-        for (auto c : clips) {
-            for (int i = c[0] + 1; i <= c[1]; i++) {
-                f[i] = min(f[i], f[c[0]] + 1);
+
+        int n = clips.size();
+        vector f(n + 1, 0);
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (clips[j][0] <= f[i - 1]) {
+                    f[i] = max(f[i], clips[j][1]);
+                    if (f[i] >= T) return i;
+                }
             }
         }
-
-        return f[T] >= 100 ? -1 : f[T];
+        return -1;
     }
 };
 // @lc code=end
-
