@@ -10,25 +10,25 @@ class Solution {
     int maximalSquare(vector<vector<char>>& matrix) {
         if (matrix.empty() || matrix[0].empty()) return 0;
 
-        int rows = matrix.size();
-        int cols = matrix[0].size();
+        int m = matrix.size();
+        int n = matrix[0].size();
 
-        vector f(rows, vector(cols, 0));
-        int maxLen = 0;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        vector f(m, vector(n, 0));
+        int maxlen = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (i == 0 || j == 0 || matrix[i][j] == '0') {
                     f[i][j] = matrix[i][j] - '0';
                 } else {
                     f[i][j] =
                         min({f[i - 1][j - 1], f[i - 1][j], f[i][j - 1]}) + 1;
                 }
-                maxLen = max(f[i][j], maxLen);
+
+                maxlen = max(maxlen, f[i][j]);
             }
         }
 
-        return maxLen * maxLen;
+        return maxlen * maxlen;
     }
 };
 // @lc code=end
