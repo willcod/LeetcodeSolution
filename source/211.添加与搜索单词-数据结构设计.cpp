@@ -6,52 +6,57 @@
 #include "cpp_includes.h"
 // @lc code=start
 class TrieNode {
- public:
-  TrieNode() : isWord(false), children(26, nullptr) {}
+  public:
+    bool isWord;
+    TrieNode *children[26];
 
-  bool isWord;
-  vector<TrieNode*> children;
+  public:
+    TrieNode() {
+        isWord = false;
+        memset(children, 0, sizeof(children));
+    }
 };
 class WordDictionary {
- public:
-  /** Initialize your data structure here. */
-  WordDictionary() { root = new TrieNode(); }
+  public:
+    /** Initialize your data structure here. */
+    WordDictionary() { root = new TrieNode(); }
 
-  /** Adds a word into the data structure. */
-  void addWord(string word) {
-    auto node = root;
-    for (char c : word) {
-      if (node->children[c - 'a'] == nullptr) {
-        node->children[c - 'a'] = new TrieNode();
-      }
-      node = node->children[c - 'a'];
-    }
-
-    node->isWord = true;
-  }
-
-  /** Returns if the word is in the data structure. A word could contain the dot
-   * character '.' to represent any one letter. */
-  bool search(string word) { return search(word.c_str(), root); }
-
-  bool search(const char* word, TrieNode* node) {
-    for (int i = 0; word[i] && node; i++) {
-      if (word[i] != '.') {
-        node = node->children[word[i] - 'a'];
-      } else {
-        auto tmp = node;
-        for (int j = 0; j < 26; j++) {
-          node = tmp->children[j];
-          if (search(word + i + 1, node)) return true;
+    /** Adds a word into the data structure. */
+    void addWord(string word) {
+        auto node = root;
+        for (char c : word) {
+            if (!node->children[c - 'a']) {
+                node->children[c - 'a'] = new TrieNode();
+            }
+            node = node->children[c - 'a'];
         }
-      }
+        node->isWord = true;
     }
 
-    return node && node->isWord;
-  }
+    /** Returns if the word is in the data structure. A word could contain the
+     * dot character '.' to represent any one letter. */
+    bool search(string word) { return search(word.c_str(), root); }
 
- private:
-  TrieNode* root;
+    bool search(const char *word, TrieNode *node) {
+        for (int i = 0; word[i] && node; i++) {
+            if (word[i] != '.') {
+                node = node->children[word[i] - 'a'];
+            } else {
+                auto temp = node;
+                for (int j = 0; j < 26; j++) {
+                    node = temp->children[j];
+                    if (search(word+i+1, node)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return node && node->isWord;
+    }
+
+  private:
+    TrieNode *root;
 };
 
 /**

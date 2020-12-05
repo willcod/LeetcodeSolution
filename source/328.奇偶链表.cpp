@@ -20,18 +20,18 @@ public:
     ListNode* oddEvenList(ListNode* head) {
         if (!head) return head;
 
-        auto evenhead = head->next;
         auto odd = head;
-        auto even = evenhead;
+        auto eve = head->next;
+        auto eveHead = head->next;
 
-        while (even && even->next) {
-            odd->next = even->next;
+        while(eve && eve->next) {
+            odd->next = eve->next;
             odd = odd->next;
-            even->next = odd->next;
-            even = even->next;
+            eve->next = odd->next;
+            eve = eve->next;
         }
-        odd->next = evenhead;
 
+        odd->next = eveHead;
         return head;
     }
 };
