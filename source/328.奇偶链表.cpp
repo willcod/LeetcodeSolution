@@ -16,7 +16,7 @@
  * };
  */
 class Solution {
-public:
+   public:
     ListNode* oddEvenList(ListNode* head) {
         if (!head) return head;
 
@@ -24,7 +24,7 @@ public:
         auto eve = head->next;
         auto eveHead = head->next;
 
-        while(eve && eve->next) {
+        while (eve && eve->next) {
             odd->next = eve->next;
             odd = odd->next;
             eve->next = odd->next;
@@ -36,4 +36,3 @@ public:
     }
 };
 // @lc code=end
-
