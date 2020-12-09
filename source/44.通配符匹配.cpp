@@ -15,7 +15,7 @@ class Solution {
         f[0][0] = true;
 
         for (int i = 1; i <= n; i++) {
-            f[0][i] = f[0][i - 1] && (p[i - 1] == '*');
+            f[0][i] = f[0][i - 1] && p[i - 1] == '*';
         }
 
         for (int i = 1; i <= m; i++) {
@@ -27,6 +27,7 @@ class Solution {
                 }
             }
         }
+
         return f[m][n];
     }
 };

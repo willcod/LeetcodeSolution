@@ -6,26 +6,26 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  int coinChange(vector<int>& coins, int amount) {
-    sort(coins.rbegin(), coins.rend());
-    int res = INT_MAX;
-    coinChange(coins, amount, 0, 0, res);
-    return res == INT_MAX ? -1 : res;
-  }
-
-  void coinChange(vector<int>& coins, int amount, int index, int count,
-                  int& res) {
-    if (amount == 0) {
-      res = min(count, res);
-      return;
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        sort(coins.rbegin(), coins.rend());
+        int total = INT_MAX;
+        coinChange(coins, amount, 0, 0, total);
+        return total == INT_MAX ? -1 : total;
     }
 
-    if (index == coins.size()) return;
+    void coinChange(vector<int>& coins, int amount, int index, int count, int& total) {
+        if (amount == 0) {
+            total = min(total, count);
+            return;
+        }
 
-    for (int c = amount / coins[index]; c >= 0 && c + count < res; c--) {
-      coinChange(coins, amount - c * coins[index], index + 1, c + count, res);
+        if (index >= coins.size()) return;
+
+        for (int k = amount/coins[index]; k >= 0 && count+k < total; k-- ) {
+            coinChange(coins, amount - k*coins[index], index+1, count+k, total);
+        }
     }
-  }
 };
 // @lc code=end
+
