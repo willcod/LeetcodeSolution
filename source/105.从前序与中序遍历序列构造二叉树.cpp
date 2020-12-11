@@ -15,26 +15,29 @@
  * };
  */
 class Solution {
- public:
-  TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-    unordered_map<int, int> hash;
-    for (int i = 0; i < inorder.size(); i++) hash[inorder[i]] = i;
+   public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        unordered_map<int, int> inMap;
+        for (int i = 0; i < inorder.size(); i++) {
+            inMap[inorder[i]] = i;
+        }
 
-    int depth = 0;
-    return build(preorder, inorder, hash, 0, inorder.size() - 1, depth);
-  }
+        int ps = 0;
+        return buildTree(preorder, inorder, inMap, ps, 0, inorder.size() - 1);
+    }
 
-  TreeNode* build(vector<int>& preorder, vector<int>& inorder,
-                  unordered_map<int, int>& hash, int start, int end, int& ps) {
-    if (ps >= inorder.size() || start > end) return NULL;
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder,
+                        unordered_map<int, int>& inMap, int& ps, int is,
+                        int ie) {
+        if (ps >= preorder.size() || is > ie) return nullptr;
 
-    auto root = new TreeNode(preorder[ps]);
-    int in = hash[preorder[ps]];
-    ps++;
+        auto root = new TreeNode(preorder[ps]);
+        int pos = inMap[preorder[ps]];
+        ps++;
 
-    root->left = build(preorder, inorder, hash, start, in - 1, ps);
-    root->right = build(preorder, inorder, hash, in + 1, end, ps);
-    return root;
-  }
+        root->left = buildTree(preorder, inorder, inMap, ps, is, pos - 1);
+        root->right = buildTree(preorder, inorder, inMap, ps, pos + 1, ie);
+        return root;
+    }
 };
 // @lc code=end

@@ -5,19 +5,18 @@
  */
 #include "cpp_includes.h"
 // @lc code=start
-class TrieNode {
-  public:
+struct TrieNode {
     bool isWord;
-    TrieNode *children[26];
+    TrieNode* children[26];
 
-  public:
     TrieNode() {
         isWord = false;
         memset(children, 0, sizeof(children));
     }
 };
+
 class WordDictionary {
-  public:
+   public:
     /** Initialize your data structure here. */
     WordDictionary() { root = new TrieNode(); }
 
@@ -25,7 +24,7 @@ class WordDictionary {
     void addWord(string word) {
         auto node = root;
         for (char c : word) {
-            if (!node->children[c - 'a']) {
+            if (node->children[c - 'a'] == nullptr) {
                 node->children[c - 'a'] = new TrieNode();
             }
             node = node->children[c - 'a'];
@@ -37,7 +36,8 @@ class WordDictionary {
      * dot character '.' to represent any one letter. */
     bool search(string word) { return search(word.c_str(), root); }
 
-    bool search(const char *word, TrieNode *node) {
+   private:
+    bool search(const char* word, TrieNode* node) {
         for (int i = 0; word[i] && node; i++) {
             if (word[i] != '.') {
                 node = node->children[word[i] - 'a'];
@@ -45,18 +45,17 @@ class WordDictionary {
                 auto temp = node;
                 for (int j = 0; j < 26; j++) {
                     node = temp->children[j];
-                    if (search(word+i+1, node)) {
+                    if (search(word + i + 1, node)) {
                         return true;
                     }
                 }
             }
         }
-
         return node && node->isWord;
     }
 
-  private:
-    TrieNode *root;
+   private:
+    TrieNode* root;
 };
 
 /**

@@ -8,27 +8,20 @@
 class Solution {
    public:
     int longestMountain(vector<int>& A) {
-        int n = A.size();
-        if (n < 3) return 0;
-
-        vector f(n, 1);
-        vector b(n, 1);
-
-        for (int i = 1; i < n; i++) {
-            if (A[i] > A[i - 1]) f[i] = f[i - 1] + 1;
-        }
-
-        for (int i = n - 2; i >= 0; i--) {
-            if (A[i] > A[i + 1]) b[i] = b[i + 1] + 1;
-        }
+        if (A.size() < 3) return 0;
 
         int maxlen = 0;
-        for (int i = 0; i < n; i++) {
-            if (f[i] > 1 && b[i] > 1) {
-                maxlen = max(maxlen, f[i] + b[i] - 1);
+        for (int i = 1; i < A.size() - 1; i++) {
+            if (A[i] > A[i + 1] && A[i] > A[i - 1]) {
+                int left = i - 1;
+                int right = i + 1;
+
+                while (left > 0 && A[left] > A[left - 1]) left--;
+                while (right < A.size() - 1 && A[right] > A[right + 1]) right++;
+
+                maxlen = max(maxlen, right - left + 1);
             }
         }
-
         return maxlen;
     }
 };
