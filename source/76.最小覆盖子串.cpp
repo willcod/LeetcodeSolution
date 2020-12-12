@@ -10,20 +10,21 @@ public:
     string minWindow(string s, string t) {
         if (s.empty() || t.empty()) return "";
 
-        unordered_map<char, int> remain;
-        for (char c : t) {
+        int required = t.length();
+        vector<int> remain(128, 0);
+        for (auto c : t) {
             remain[c]++;
         }
 
-        int required = t.length();
-        int start =0, end = 0, begin = 0;
         int minlen = INT_MAX;
-        while (start < s.length() && end <= s.length()) {
+        int start = 0, end = 0, begin = 0;
+
+        while (end <= s.length() && start < s.length()) {
             if (required) {
                 if (end == s.length()) break;
                 if (--remain[s[end]] >= 0) required--;
                 end++;
-            }else {
+            } else {
                 if (end - start < minlen) {
                     minlen = end - start;
                     begin = start;
@@ -34,7 +35,7 @@ public:
             }
         }
 
-        return minlen == INT_MAX? "":s.substr(begin, minlen);
+        return minlen == INT_MAX ? "" : s.substr(begin, minlen);
     }
 };
 // @lc code=end

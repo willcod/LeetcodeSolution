@@ -6,15 +6,15 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     int trap(vector<int>& height) {
+        int n = height.size();
+        if (n < 3) return 0;
+
         int left = 0;
-        int right = height.size() - 1;
+        int right = n - 1;
 
-        int water = 0;
-        int leftArea = 0;
-        int rightArea = 0;
-
+        int water = 0, int leftArea = 0, int rightArea = 0;
         while (left < right) {
             leftArea = max(leftArea, height[left]);
             rightArea = max(rightArea, height[right]);
@@ -25,8 +25,8 @@ class Solution {
                 water += rightArea - height[right--];
             }
         }
-
         return water;
     }
 };
 // @lc code=end
+
