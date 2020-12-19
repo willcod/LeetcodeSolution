@@ -8,21 +8,21 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        if (s.empty() || t.empty()) return "";
+        int m = s.length();
 
         int required = t.length();
-        vector<int> remain(128, 0);
-        for (auto c : t) {
-            remain[c]++;
+        unordered_map<char, int> hash;
+        for (char c : t) {
+            hash[c]++;
         }
 
-        int minlen = INT_MAX;
         int start = 0, end = 0, begin = 0;
+        int minlen = INT_MAX;
 
-        while (end <= s.length() && start < s.length()) {
+        while (end <= m && start < m) {
             if (required) {
-                if (end == s.length()) break;
-                if (--remain[s[end]] >= 0) required--;
+                if (end == m) break;
+                if (--hash[s[end]] >= 0) required--;
                 end++;
             } else {
                 if (end - start < minlen) {
@@ -30,12 +30,14 @@ public:
                     begin = start;
                 }
 
-                if (++remain[s[start]] > 0) required++;
+                if (++hash[s[start]] > 0) required++;
                 start++;
             }
         }
 
+
         return minlen == INT_MAX ? "" : s.substr(begin, minlen);
+
     }
 };
 // @lc code=end

@@ -11,18 +11,25 @@ class Solution {
         int sum = accumulate(nums.begin(), nums.end(), 0);
         if (sum % 2) return false;
 
-        sum /= 2;
-        vector f(sum + 1, 0);
-        f[0] = true;
+        int target = sum / 2;
+        int n = nums.size();
 
-        for (int num : nums) {
-            for (int i = sum; i >= 0; i--) {
-                if (i >= num) {
-                    f[i] = f[i] || f[i - num];
+        vector f(n + 1, vector(target + 1, false));
+        f[0][0] = true;
+
+        for (int i = 1; i <= n; i++) {
+            f[i][0] = true;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= target; j++) {
+                f[i][j] = f[i - 1][j];
+                if (j >= nums[i - 1]) {
+                    f[i][j] = f[i][j] || f[i - 1][j - nums[i - 1]];
                 }
             }
         }
-        return f[sum];
+        return f[n][target];
     }
 };
 // @lc code=end

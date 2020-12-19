@@ -16,23 +16,25 @@
  * };
  */
 class Solution {
-   public:
+public:
     ListNode* oddEvenList(ListNode* head) {
-        if (!head) return head;
+        if (!head || !head->next) return head;
 
         auto odd = head;
-        auto eve = head->next;
-        auto eveHead = head->next;
+        auto even = head->next;
+        auto evenHead = head->next;
 
-        while (eve && eve->next) {
-            odd->next = eve->next;
+        while (even && even->next) {
+            odd->next = even->next;
             odd = odd->next;
-            eve->next = odd->next;
-            eve = eve->next;
+            even->next= odd->next;
+            even = even->next;
         }
 
-        odd->next = eveHead;
+        odd->next = evenHead;
+        
         return head;
     }
 };
 // @lc code=end
+
