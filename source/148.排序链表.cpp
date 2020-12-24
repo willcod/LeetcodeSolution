@@ -18,12 +18,12 @@
 class Solution {
    public:
     ListNode* sortList(ListNode* head) {
-        if (!head || !(head->next)) return head;
+        if (!head || !head->next) return head;
 
-        auto fast = head;
         auto slow = head;
-        ListNode* pre = nullptr;
+        auto fast = head;
 
+        ListNode* pre;
         while (fast && fast->next) {
             pre = slow;
             slow = slow->next;
@@ -31,6 +31,7 @@ class Solution {
         }
 
         pre->next = nullptr;
+
         auto l1 = sortList(head);
         auto l2 = sortList(slow);
 
