@@ -17,23 +17,22 @@ class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
         if (!head) return head;
-
         ListNode dummy(0);
         dummy.next = head;
-        auto pre = &dummy;
+
+        ListNode* pre = &dummy;
+
         while (pre && pre->next) {
             auto node = pre->next;
-            if (!node->next || node->val != node->next->val) {
+            if (!node->next || (node->val != node->next->val)) {
                 pre = node;
-            } else {
-                while (node->next && node->val == node->next->val) {
+            }else{
+                while(node->next && node->val == node->next->val)
                     node = node->next;
-                }
+                
                 pre->next = node->next;
             }
         }
-
-
         return dummy.next;
     }
 };

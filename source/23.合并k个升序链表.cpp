@@ -16,32 +16,31 @@
  * };
  */
 class Solution {
- public:
-  ListNode* mergeKLists(vector<ListNode*>& lists) {
-    if (lists.empty()) return NULL;
+   public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.empty()) return nullptr;
+        int n = lists.size();
 
-    int n = lists.size();
-    int interval = 1;
-    while (interval < n) {
-      for (int i = 0; i < n - interval; i += interval * 2) {
-        lists[i] = merge2Lists(lists[i], lists[i + interval]);
-      }
-      interval *= 2;
+        while (n > 1) {
+            for (int i = 0; i < n / 2; i++) {
+                lists[i] = merge2lists(lists[i], lists[n - i - 1]);
+            }
+            n = (n + 1) / 2;
+        }
+        return lists[0];
     }
-    return lists[0];
-  }
 
-  ListNode* merge2Lists(ListNode* l1, ListNode* l2) {
-    if (l1 == NULL) return l2;
-    if (l2 == NULL) return l1;
+    ListNode* merge2lists(ListNode* l1, ListNode* l2) {
+        if (!l1) return l2;
+        if (!l2) return l1;
 
-    if (l1->val <= l2->val) {
-      l1->next = merge2Lists(l1->next, l2);
-      return l1;
-    } else {
-      l2->next = merge2Lists(l2->next, l1);
-      return l2;
+        if (l1->val < l2->val) {
+            l1->next = merge2lists(l1->next, l2);
+            return l1;
+        } else {
+            l2->next = merge2lists(l2->next, l1);
+            return l2;
+        }
     }
-  }
 };
 // @lc code=end

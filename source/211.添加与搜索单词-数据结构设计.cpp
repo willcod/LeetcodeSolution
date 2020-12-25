@@ -5,12 +5,13 @@
  */
 #include "cpp_includes.h"
 // @lc code=start
-struct TrieNode {
-    bool isWord;
-    TrieNode* children[26];
+class Trie {
+   public:
+    bool is_word;
+    Trie* children[26];
 
-    TrieNode() {
-        isWord = false;
+    Trie() {
+        is_word = false;
         memset(children, 0, sizeof(children));
     }
 };
@@ -18,18 +19,19 @@ struct TrieNode {
 class WordDictionary {
    public:
     /** Initialize your data structure here. */
-    WordDictionary() { root = new TrieNode(); }
+    WordDictionary() { root = new Trie(); }
 
     /** Adds a word into the data structure. */
     void addWord(string word) {
         auto node = root;
         for (char c : word) {
-            if (node->children[c - 'a'] == nullptr) {
-                node->children[c - 'a'] = new TrieNode();
+            if (!node->children[c - 'a']) {
+                node->children[c - 'a'] = new Trie();
             }
             node = node->children[c - 'a'];
         }
-        node->isWord = true;
+
+        node->is_word = true;
     }
 
     /** Returns if the word is in the data structure. A word could contain the
@@ -37,25 +39,25 @@ class WordDictionary {
     bool search(string word) { return search(word.c_str(), root); }
 
    private:
-    bool search(const char* word, TrieNode* node) {
+    bool search(const char* word, Trie* node) {
         for (int i = 0; word[i] && node; i++) {
             if (word[i] != '.') {
                 node = node->children[word[i] - 'a'];
             } else {
-                auto temp = node;
+                auto tmp = node;
                 for (int j = 0; j < 26; j++) {
-                    node = temp->children[j];
+                    node = tmp->children[j];
                     if (search(word + i + 1, node)) {
                         return true;
                     }
                 }
             }
         }
-        return node && node->isWord;
+        return node && node->is_word;
     }
 
    private:
-    TrieNode* root;
+    Trie* root;
 };
 
 /**

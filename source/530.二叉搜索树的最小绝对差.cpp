@@ -17,21 +17,19 @@
 class Solution {
    public:
     int getMinimumDifference(TreeNode* root) {
-        int min = INT_MAX;
+        int diff = INT_MAX;
         int pre = -1;
-
-        getMin(root, pre, min);
-        return min;
+        getMinimumDifference(root, pre, diff);
+        return diff;
     }
 
-    void getMin(TreeNode* root, int& pre, int& min) {
+    void getMinimumDifference(TreeNode* root, int& pre, int& diff) {
         if (!root) return;
 
-        getMin(root->left, pre, min);
-        if (pre >= 0) min = std::min(min, root->val - pre);
+        getMinimumDifference(root->left, pre, diff);
+        if (pre >= 0) diff = min(diff, root->val - pre);
         pre = root->val;
-
-        getMin(root->right, pre, min);
+        getMinimumDifference(root->right, pre, diff);
     }
 };
 // @lc code=end

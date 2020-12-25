@@ -6,28 +6,31 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     string predictPartyVictory(string senate) {
-        queue<int> r_que, d_que;
-        int n = senate.length();
-        for (int i = 0; i < n; i++) {
-            if (senate[i] == 'R')
-                r_que.push(i);
-            else
-                d_que.push(i);
-        }
-
-        while (!r_que.empty() && !d_que.empty()) {
-            int r = r_que.front(), d = d_que.front();
-            r_que.pop(), d_que.pop();
-            if (r < d) {
-                r_que.push(r + n);
+        queue<int> rq, dq;
+        int n = senate.size();
+        for (int i = 0; i < senate.size(); i++) {
+            if (senate[i] == 'R') {
+                rq.push(i);
             } else {
-                d_que.push(d + n);
+                dq.push(i);
             }
         }
 
-        return r_que.empty() ? "Dire" : "Radiant";
+        while (rq.size() && dq.size()) {
+            int r = rq.front(); rq.pop();
+            int d = dq.front(); dq.pop();
+
+            if (r < d) {
+                rq.push(r+n);
+            } else {
+                dq.push(d+n);
+            }
+        }
+
+        return rq.empty() ? "Dire" : "Radiant";
     }
 };
 // @lc code=end
+
