@@ -6,27 +6,27 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     int trap(vector<int>& height) {
+        stack<int> stk;
+
         int n = height.size();
-        if (n < 3) return 0;
-
-        int left = 0;
-        int right = n - 1;
-
-        int water = 0, int leftArea = 0, int rightArea = 0;
-        while (left < right) {
-            leftArea = max(leftArea, height[left]);
-            rightArea = max(rightArea, height[right]);
-
-            if (leftArea < rightArea) {
-                water += leftArea - height[left++];
-            } else {
-                water += rightArea - height[right--];
+        int water = 0;
+        for (int i = 0; i < n; i++) {
+            while (stk.size() && height[stk.top()] < height[i]) {
+                int cur = stk.top();
+                stk.pop();
+                if (!stk.empty()) {
+                    int l = stk.top();
+                    int r = i;
+                    int h = min(height[l], height[r]) - height[cur];
+                    water += h * (r - l - 1);
+                }
             }
+
+            stk.push(i);
         }
         return water;
     }
 };
 // @lc code=end
-

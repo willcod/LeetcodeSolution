@@ -8,12 +8,12 @@
 class Solution {
    public:
     bool isIsomorphic(string s, string t) {
-        if (s.length() != t.length()) return false;
+        int n = s.length();
 
-        int len = s.length();
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < n; i++) {
             if (s.find(s[i]) != t.find(t[i])) return false;
         }
+
         return true;
     }
 };

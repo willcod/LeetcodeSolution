@@ -9,18 +9,22 @@ class Solution {
 public:
     string removeKdigits(string num, int k) {
         string ans = "";
+
+        int remain = num.size() - k;
+
         for (char c : num) {
-            while (ans.length() && ans.back() > c && k) {
+            while (ans.size() && ans.back() > c && k) {
                 ans.pop_back();
                 k--;
             }
 
-            if (ans.length() || c != '0') ans.push_back(c);
+            ans.push_back(c);
         }
 
-        while (ans.length() && k--) ans.pop_back();
-
-        return ans.empty() ? "0" : ans;
+        ans.resize(remain);
+        int pos = ans.find_first_not_of('0');
+        if (pos == string::npos) return "0";
+        return ans.substr(pos);
     }
 };
 // @lc code=end
