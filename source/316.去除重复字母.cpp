@@ -8,29 +8,29 @@
 class Solution {
    public:
     string removeDuplicateLetters(string s) {
-        unordered_map<char, int> remain;
-        unordered_map<char, bool> visited;
+        unordered_map<char, int> counter;
+        unordered_map<char, bool> had;
 
-        for (char c : s) {
-            remain[c]++;
-            visited[c] = false;
+        for (auto c : s) {
+            counter[c]++;
+            had[c] = false;
         }
 
-        string str = "";
-        for (char c : s) {
-            remain[c]--;
-            if (visited[c]) continue;
+        string res = "";
+        for (auto c : s) {
+            counter[c]--;
+            if (had[c]) continue;
 
-            while (str.size() && str.back() > c && remain[str.back()] > 0) {
-                visited[str.back()] = false;
-                str.pop_back();
+            while (res.length() && res.back() > c && counter[res.back()] > 0) {
+                had[res.back()] = false;
+                res.pop_back();
             }
 
-            str.push_back(c);
-            visited[c] = true;
+            res.push_back(c);
+            had[c] = true;
         }
 
-        return str;
+        return res;
     }
 };
 // @lc code=end

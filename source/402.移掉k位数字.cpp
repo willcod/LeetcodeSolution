@@ -6,26 +6,24 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     string removeKdigits(string num, int k) {
-        string ans = "";
+        int n = num.length();
+        int remain = n - k;
 
-        int remain = num.size() - k;
-
+        string res = "";
         for (char c : num) {
-            while (ans.size() && ans.back() > c && k) {
-                ans.pop_back();
+            while (res.length() && res.back() > c && k) {
+                res.pop_back();
                 k--;
             }
-
-            ans.push_back(c);
+            res.push_back(c);
         }
 
-        ans.resize(remain);
-        int pos = ans.find_first_not_of('0');
+        res.resize(remain);
+        int pos = res.find_first_not_of('0');
         if (pos == string::npos) return "0";
-        return ans.substr(pos);
+        return res.substr(pos);
     }
 };
 // @lc code=end
-
