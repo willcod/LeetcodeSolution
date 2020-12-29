@@ -5,61 +5,32 @@
  */
 #include "cpp_includes.h"
 // @lc code=start
-class JointSet {
-    private:
-    int count;
-    vector<int> parent;
-    vector<int> size;
-
-    public:
-    JointSet(int n) : count(n), parent(n, 0), size(n, 1) {
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-        }
-    }
-
-    int Count() { return count;}
-
-    int isConnect(int p, int q) {
-        return find(p) == find(q);
-    }
-
-    int find(int x) {
-        while (parent[x] != x) {
-            parent[x] = parent[parent[x]];
-            x = parent[x];
-        }
-        return x;
-    }
-
-    void Union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-
-        if (rootP == rootQ) return;
-        if (size[rootP] < size[rootQ]) {
-            parent[rootP] = rootQ;
-            size[rootQ] += size[rootP];
-        } else {
-            parent[rootQ] = rootP;
-            size[rootP] += size[rootQ];
-        }
-        count--;
-    }
-};
 class Solution {
-public:
+   public:
     int findCircleNum(vector<vector<int>>& M) {
         int n = M.size();
-        JointSet js(n);
+        vector visited(n, false);
+
+        int circleNum = 0;
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                if (M[i][j] == 1) js.Union(i,j);
+            if (!visited[i]) {
+                circleNum++;
+                visit(M, i, visited);
             }
         }
+        return circleNum;
+    }
 
-        return js.Count();
+    void visit(vector<vector<int>>& M, int i, vector<bool>& visited) {
+        if (visited[i] == false) {
+            visited[i] = true;
+
+            for (int j = 0; j < M.size(); j++) {
+                if (M[i][j] == 1 && !visited[j]) {
+                    visit(M, j, visited);
+                }
+            }
+        }
     }
 };
 // @lc code=end
-
