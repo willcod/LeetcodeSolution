@@ -3,31 +3,36 @@
  *
  * [77] 组合
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     vector<vector<int>> combine(int n, int k) {
-        if (n < k) return {};
+        vector<int> nums;
+        for (int i = 1; i <= n; i++) {
+            nums.push_back(i);
+        }
 
         vector<vector<int>> res;
         vector<int> path;
-        backtracking(res, path, n, k, 1);
+        combine(res, path, nums, k, 0);
         return res;
     }
 
-    void backtracking(vector<vector<int>>& res, vector<int>& path, int n, int k, int index) {
+    void combine(vector<vector<int>>& res, vector<int>& path, vector<int>& nums,
+                 int k, int index) {
         if (path.size() == k) {
             res.push_back(path);
             return;
         }
 
-        for (int i = index; i <= n; i++) {
-            path.push_back(i);
-            backtracking(res, path, n, k, i+1);
+        if (index == nums.size()) return;
+
+        for (int i = index; i < nums.size(); i++) {
+            path.push_back(nums[i]);
+            combine(res, path, nums, k, i + 1);
             path.pop_back();
         }
     }
 };
 // @lc code=end
-
