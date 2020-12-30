@@ -18,13 +18,13 @@ class Solution {
                 visit(M, i, visited);
             }
         }
+
         return circleNum;
     }
 
     void visit(vector<vector<int>>& M, int i, vector<bool>& visited) {
         if (visited[i] == false) {
             visited[i] = true;
-
             for (int j = 0; j < M.size(); j++) {
                 if (M[i][j] == 1 && !visited[j]) {
                     visit(M, j, visited);
