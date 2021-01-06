@@ -21,37 +21,17 @@ public:
     void flatten(TreeNode* root) {
         if (!root) return;
 
-        flatten(root->right);
         flatten(root->left);
+        flatten(root->right);
 
-        root->right = pre;
-        root->left = NULL;
-        pre = root;
+        auto temp = root->right;
+        root->right = root->left;
+        root->left = nullptr;
 
+        while(root->right) root = root->right;
+        root->right = temp;
     }
 
-    private:
-    TreeNode* pre;
 };
 // @lc code=end
 
-class Solution {
- public:
-  void flatten(TreeNode* root) {
-    if (!root) return;
-
-    auto current = root;
-    while (current) {
-      if (current->left) {
-        auto pre = current->left;
-        while (pre->right) {
-          pre = pre->right;
-        }
-        pre->right = current->right;
-        current->right = current->left;
-        current->left = nullptr;
-      }
-      current = current->right;
-    }
-  }
-};

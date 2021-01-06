@@ -104,6 +104,7 @@ class Node {
     Node *right;
     Node *next;
     Node *random;
+    vector<Node*> neighbors;
 
     Node() : val(0), left(NULL), right(NULL), next(NULL) {}
 
@@ -117,3 +118,16 @@ struct ListNode {
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
 };
+
+
+void print(vector<int>& f) {
+    cout << endl << "|";
+    for (int i = 0; i < f.size(); i++) {
+        cout << i << "|";
+    }
+    cout << endl << "|";
+    for (int i = 0; i < f.size(); i++) {
+        cout << f[i] << "|";
+    }
+    cout << endl;
+}

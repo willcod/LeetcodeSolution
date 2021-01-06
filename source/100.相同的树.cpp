@@ -3,7 +3,7 @@
  *
  * [100] 相同的树
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -21,7 +21,9 @@ public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
         if (!p || !q) return p == q;
 
-        return (p->val == q->val) && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+        return (p->val == q->val) 
+            && isSameTree(p->left, q->left) 
+            && isSameTree(p->right, q->right);
     }
 };
 // @lc code=end

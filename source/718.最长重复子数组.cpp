@@ -6,23 +6,23 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     int findLength(vector<int>& A, vector<int>& B) {
         int m = A.size();
         int n = B.size();
 
-        vector f(m + 1, vector(n + 1, 0));
-        int maxlen = 0;
+        vector f(m+1, vector(n+1, 0));
+        int len = 0;
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
-                if (A[i - 1] == B[j - 1]) {
-                    f[i][j] = f[i - 1][j - 1] + 1;
-                    maxlen = max(maxlen, f[i][j]);
+                if (A[i-1] == B[j-1]){
+                    f[i][j] = f[i-1][j-1]+1;
                 }
+                len = max(len, f[i][j]);
             }
         }
-
-        return maxlen;
+        return len;
     }
 };
 // @lc code=end
+
