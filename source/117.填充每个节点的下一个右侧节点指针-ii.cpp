@@ -26,12 +26,13 @@ public:
 class Solution {
    public:
     Node* connect(Node* root) {
-        if (!root) return NULL;
+        if (!root) return root;
 
         queue<Node*> q;
         q.push(root);
 
-        Node *node, *pre;
+        Node* pre = nullptr;
+        Node* cur = nullptr;
 
         while (!q.empty()) {
             int n = q.size();
@@ -39,19 +40,20 @@ class Solution {
                 if (i == 0) {
                     pre = q.front();
                     q.pop();
-                    node = pre;
+                    cur = pre;
                 } else {
-                    node = q.front();
+                    cur = q.front();
                     q.pop();
-                    pre->next = node;
+                    pre->next = cur;
                     pre = pre->next;
-                                }
+                }
 
-                if (node->left) q.push(node->left);
-                if (node->right) q.push(node->right);
+                if (cur->left) q.push(cur->left);
+                if (cur->right) q.push(cur->right);
             }
-            pre->next = NULL;
+            pre->next = nullptr;
         }
+
         return root;
     }
 };

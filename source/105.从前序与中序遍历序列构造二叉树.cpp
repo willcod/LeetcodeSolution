@@ -17,27 +17,28 @@
 class Solution {
    public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        unordered_map<int, int> inMap;
-        for (int i = 0; i < inorder.size(); i++) {
-            inMap[inorder[i]] = i;
-        }
+        if (preorder.empty() || inorder.empty()) return {};
 
+        for (int i = 0; i < inorder.size(); i++) {
+            intable[inorder[i]] = i;
+        }
         int ps = 0;
-        return buildTree(preorder, inorder, inMap, ps, 0, inorder.size() - 1);
+        return build(preorder, 0, inorder.size() - 1, ps);
     }
 
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder,
-                        unordered_map<int, int>& inMap, int& ps, int is,
-                        int ie) {
+    TreeNode* build(vector<int>& preorder, int is, int ie, int& ps) {
         if (ps >= preorder.size() || is > ie) return nullptr;
 
         auto root = new TreeNode(preorder[ps]);
-        int pos = inMap[preorder[ps]];
+        int pos = intable[preorder[ps]];
         ps++;
+        root->left = build(preorder, is, pos - 1, ps);
+        root->right = build(preorder, pos + 1, ie, ps);
 
-        root->left = buildTree(preorder, inorder, inMap, ps, is, pos - 1);
-        root->right = buildTree(preorder, inorder, inMap, ps, pos + 1, ie);
         return root;
     }
+
+   private:
+    unordered_map<int, int> intable;
 };
 // @lc code=end

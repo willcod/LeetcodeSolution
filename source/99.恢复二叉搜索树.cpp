@@ -20,13 +20,11 @@
 class Solution {
    public:
     void recoverTree(TreeNode* root) {
-        if (!root) return;
-
-        TreeNode* pre = NULL;
-        TreeNode* first = NULL;
-        TreeNode* second = NULL;
-
+        TreeNode* pre = nullptr;
+        TreeNode* first = nullptr;
+        TreeNode* second = nullptr;
         travel(root, pre, first, second);
+
         swap(first->val, second->val);
     }
 
@@ -37,10 +35,9 @@ class Solution {
         travel(node->left, pre, first, second);
 
         if (pre) {
-            if (pre->val > node->val) {
-                if (!first) {
-                    first = pre;
-                }
+            if (pre->val >= node->val) {
+                if (!first) first = pre;
+
                 second = node;
             }
         }

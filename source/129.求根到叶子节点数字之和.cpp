@@ -15,22 +15,26 @@
  * };
  */
 class Solution {
- public:
-  int sumNumbers(TreeNode* root) {
-    if (!root) return 0;
-    return total(root, 0);
-  }
+   public:
+    int sumNumbers(TreeNode* root) {
+        vector<int> nums;
 
-  int total(TreeNode* root, int pre) {
-    if (!root) return 0;
-    pre = pre * 10 + root->val;
+        traverse(root, nums, 0);
 
-    if (root->left == nullptr && root->right == nullptr) return pre;
+        return accumulate(nums.begin(), nums.end(), 0);
+    }
 
-    int left = total(root->left, pre);
-    int right = total(root->right, pre);
+    void traverse(TreeNode* node, vector<int>& nums, int num) {
+        if (!node) return;
 
-    return left + right;
-  }
+        num = num * 10 + node->val;
+
+        if (!node->left && !node->right) {
+            nums.push_back(num);
+        }
+
+        traverse(node->left, nums, num);
+        traverse(node->right, nums, num);
+    }
 };
 // @lc code=end

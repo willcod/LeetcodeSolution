@@ -8,9 +8,8 @@
 class Solution {
    public:
     int maxDistance(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        // 先把所有的陆地都入队。
+        int n = grid.size();
+
         queue<vector<int>> q;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -19,37 +18,36 @@ class Solution {
                 }
             }
         }
-        // 从各个陆地开始，一圈一圈的遍历海洋，最后遍历到的海洋就是离陆地最远的海洋。
+
         bool hasOcean = false;
-        vector<int> lastOcean(2, 0);
+        vector<int> p;
         while (!q.empty()) {
-            lastOcean = q.front();
+            p = q.front();
             q.pop();
-            int x = lastOcean[0];
-            int y = lastOcean[1];
-            // 取出队列的元素，将其四周的海洋入队。
-            for (int i = 0; i < 4; i++) {
-                int newX = x + offset[i][0];
-                int newY = y + offset[i][1];
 
-                if (!isValid(n, newX, newY) || grid[newX][newY] != 0) continue;
+            int x = p[0];
+            int y = p[1];
+            for (auto offset : fourDir) {
+                int newX = x + offset[0];
+                int newY = y + offset[1];
 
-                grid[newX][newY] = grid[x][y] + 1;
+                if (newX < 0 || newY < 0 || newX >= n || newY >= n ||
+                    grid[newX][newY] != 0)
+                    continue;
+
                 hasOcean = true;
+                grid[newX][newY] = grid[x][y] + 1;
+
                 q.push({newX, newY});
             }
         }
-        // 没有陆地或者没有海洋，返回-1。
-        if (lastOcean.empty() || !hasOcean) return -1;
-        // 返回最后一次遍历到的海洋的距离。
-        return grid[lastOcean[0]][lastOcean[1]] - 1;
-    }
 
-    bool isValid(int n, int x, int y) {
-        return x >= 0 && y >= 0 && x < n && y < n;
+        if (p.empty() || !hasOcean) return -1;
+
+        return grid[p[0]][p[1]] - 1;
     }
 
    private:
-    const int offset[4][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+    int fourDir[4][2] = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
 };
 // @lc code=end

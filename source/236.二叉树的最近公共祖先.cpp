@@ -3,7 +3,7 @@
  *
  * [236] 二叉树的最近公共祖先
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -15,16 +15,14 @@
  * };
  */
 class Solution {
- public:
-  TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-    if (root == NULL || root == p || root == q) {
-      return root;
+   public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root == nullptr || p == root || q == root) return root;
+
+        auto left = lowestCommonAncestor(root->left, p, q);
+        auto right = lowestCommonAncestor(root->right, p, q);
+
+        return left && right ? root : left ? left : right;
     }
-
-    auto left = lowestCommonAncestor(root->left, p, q);
-    auto right = lowestCommonAncestor(root->right, p, q);
-
-    return left && right ? root : left ? left : right;
-  }
 };
 // @lc code=end
