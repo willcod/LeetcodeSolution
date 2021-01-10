@@ -3,18 +3,19 @@
  *
  * [647] 回文子串
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     int countSubstrings(string s) {
-        int count = 0;
-        for (int i = 0; i < s.size(); i++) {
-            for (int j = 0; i - j >= 0 && i + j < s.size() && s[i-j] == s[i+j]; j++) count++;
-            for (int j = 0; i - j - 1 >= 0 && i + j < s.size() && s[i-j-1] == s[i+j]; j++) count++;
+        int res = 0;
+        int n = s.length();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; i -j >= 0 && i+j <n&& s[i-j] == s[i+j]; j++) res++;
+            for (int j = 0; i-j-1>=0 && i+j <n && s[i-j-1] == s[i+j];j++) res++;
         }
-        return count;
+        return res;
     }
 };
 // @lc code=end
-

@@ -3,7 +3,7 @@
  *
  * [257] 二叉树的所有路径
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -15,52 +15,28 @@
  * };
  */
 class Solution {
- public:
-  vector<string> binaryTreePaths(TreeNode* root) {
-    vector<string> res;
-    if (!root) return res;
-    string path;
-    travel(res, path, root);
-    return res;
-  }
+   public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        if (!root) return {};
 
-  void travel(vector<string>& res, string path, TreeNode* root) {
-    if (!root) return;
-
-    path += to_string(root->val);
-
-    if (!root->left && !root->right) {
-      res.push_back(path);
-      return;
+        vector<string> res;
+        traverse(root, res, to_string(root->val));
+        return res;
     }
 
-    if (root->left) travel(res, path + "->", root->left);
-    if (root->right) travel(res, path + "->", root->right);
-  }
+    void traverse(TreeNode* root, vector<string>& res, string path) {
+        if (!root) return;
+        if (!root->left && !root->right) {
+            res.push_back(path);
+            return;
+        }
+
+        if (root->left)
+            traverse(root->left, res, path + "->" + to_string(root->left->val));
+
+        if (root->right)
+            traverse(root->right, res,
+                     path + "->" + to_string(root->right->val));
+    }
 };
 // @lc code=end
-class Solution {
- public:
-  vector<string> binaryTreePaths(TreeNode* root) {
-    vector<string> result;
-    if (!root) return {};
-
-    travel(result, root, to_string(root->val));
-
-    return result;
-  }
-
-  void travel(vector<string>& result, TreeNode* root, string path) {
-    if (!root) return;
-
-    if (!root->left && !root->right) {
-      result.push_back(path);
-      return;
-    }
-
-    if (root->left) 
-        travel(result, root->left, path + "->" + to_string(root->left->val));
-    if (root->right) 
-        travel(result, root->right, path + "->" + to_string(root->right->val));
-  }
-};

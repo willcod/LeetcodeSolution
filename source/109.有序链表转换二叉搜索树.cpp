@@ -3,7 +3,7 @@
  *
  * [109] 有序链表转换二叉搜索树
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -23,39 +23,34 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
-public:
+   public:
     TreeNode* sortedListToBST(ListNode* head) {
-        if (!head) return NULL;
+        if (!head) return nullptr;
 
-        return buildTree(head, NULL);
+        return buildTree(head, nullptr);
     }
 
     TreeNode* buildTree(ListNode* left, ListNode* right) {
-        if (left == right) return NULL;
+        if (left == right) return nullptr;
 
-        auto mid = getMid(left, right);
-        auto root = new TreeNode(mid->val);
-        root->left = buildTree(left, mid);
-        root->right = buildTree(mid->next, right);
-
-        return root;
-    }
-
-    ListNode* getMid(ListNode* left, ListNode* right) {
         auto slow = left;
         auto fast = left;
-
         while (fast != right && fast->next != right) {
-            slow = slow->next;
             fast = fast->next->next;
+            slow = slow->next;
         }
+        auto mid = slow;
 
-        return slow;
+        auto node = new TreeNode(mid->val);
+        node->left = buildTree(left, mid);
+        node->right = buildTree(mid->next, right);
+
+        return node;
     }
 };
 // @lc code=end
-

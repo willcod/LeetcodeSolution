@@ -13,29 +13,29 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
-   public:
+public:
     TreeNode* convertBST(TreeNode* root) {
-        if (!root) return NULL;
+        if (!root) return root;
+
         int sum = 0;
-        return convert(root, sum);
+        traverse(root, sum);
+        return root;
     }
 
-    TreeNode* convert(TreeNode* root, int& sum) {
-        if (!root) return NULL;
+    void traverse(TreeNode* node, int&sum) {
+        if (!node) return;
 
-        convert(root->right, sum);
+        if (node->right) traverse(node->right, sum);
 
-        sum += root->val;
-        root->val = sum;
+        sum += node->val;
+        node->val = sum;
 
-        convert(root->left, sum);
-
-        return root;
+        if (node->left) traverse(node->left, sum);
     }
 };
 // @lc code=end
+

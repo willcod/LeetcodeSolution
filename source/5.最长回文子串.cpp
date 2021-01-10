@@ -6,31 +6,35 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     string longestPalindrome(string s) {
-        if (s.length() < 2) return s;
-        
-        int mid = 0;
-        int begin = 0;
-        int max_len = 1;
-        while (mid < s.length()) {
-            int left = mid, right = mid;
+        int n = s.length();
+        if (n < 2) return s;
 
-            while (right + 1 < s.length() && s[right] == s[right+1]) right++;
+        int leftmost = 0;
+        int maxlen = 0;
+
+        int mid = 0;
+        while (mid < n) {
+            int left = mid;
+            int right = mid;
+
+            while (right < n &&s[right+1] == s[right]) right++;
             mid = right + 1;
-            while (right + 1 < s.length() && left > 0 && s[right+1] == s[left-1]) {
-                left--;
+            
+            while (right < n && left > 0 && s[right+1] == s[left-1]) {
                 right++;
+                left--;
             }
 
-            int new_len = right - left + 1;
-            if (new_len > max_len) {
-                begin = left;
-                max_len = new_len;
+            int len = right - left + 1;
+            if (len > maxlen) {
+                maxlen = len;
+                leftmost = left;
             }
         }
-        return s.substr(begin, max_len);
+
+        return s.substr(leftmost, maxlen);
     }
 };
 // @lc code=end
-

@@ -8,19 +8,19 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        if (prices.size() < 2) return 0;
         int n = prices.size();
 
-        int K = 2;
-        vector f(K+1, vector(n, 0));
+        vector f(3, vector(n, 0));
 
-        for (int k = 1; k <=K; k++) {
-            int preBuy = f[k-1][0] - prices[0];
+        for (int k = 1; k <= 2; k++) {
+            int lastbuy = f[k-1][0] - prices[0];
             for (int i = 1; i < n; i++) {
-                f[k][i] = max(f[k][i-1], prices[i]+preBuy);
-                preBuy = max(f[k-1][i] - prices[i], preBuy);
+                f[k][i] = max(f[k][i-1], lastbuy+prices[i]);
+                lastbuy = max(lastbuy, f[k-1][i]-prices[i]);
             }
         }
+
+        return f[2][n-1];
     }
 };
 // @lc code=end

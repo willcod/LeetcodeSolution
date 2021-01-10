@@ -3,7 +3,7 @@
  *
  * [43] 字符串相乘
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
 public:
@@ -11,11 +11,10 @@ public:
         int n = num1.length();
         int m = num2.length();
 
-        vector<int> pos(n+m, 0);
-
+        vector pos(n+m, 0);
         for (int i = n-1; i >= 0; i--) {
-            for (int j = m-1; j >= 0; j--) {
-                int mul = (num1[i]-'0') * (num2[j] - '0');
+            for (int j = m-1; j>=0; j--) {
+                int mul = (num1[i]-'0')*(num2[j]-'0');
                 int p1 = i+j;
                 int p2 = i+j+1;
 
@@ -26,13 +25,11 @@ public:
         }
 
         stringstream ss;
-        for (auto p : pos) ss << p;
-        string result = ss.str();
+        for (int n : pos) ss << n;
 
-        int startPos = result.find_first_not_of('0');
-        if (startPos != string::npos) {
-            return result.substr(startPos);
-        }
+        string res = ss.str();
+        int nzero = res.find_first_not_of('0');
+        if (nzero != string::npos) return res.substr(nzero);
         return "0";
     }
 };
