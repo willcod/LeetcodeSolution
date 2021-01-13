@@ -3,36 +3,37 @@
  *
  * [2] 两数相加
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
  *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
 class Solution {
- public:
-  ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-    ListNode head;
-    ListNode* tail = &head;
+   public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode dummy(0);
+        auto p = &dummy;
 
-    int sum = 0;
-    while (l1 || l2 || sum > 0) {
-      if (l1) sum += l1->val;
-      if (l2) sum += l2->val;
+        int sum = 0;
+        while (l1 || l2 || sum) {
+            if (l1) sum += l1->val;
+            if (l2) sum += l2->val;
 
-      tail->next = new ListNode(sum % 10);
-      tail = tail->next;
-      sum /= 10;
+            p->next = new ListNode(sum % 10);
+            p = p->next;
+            sum /= 10;
 
-      l1 = l1 ? l1->next : NULL;
-      l2 = l2 ? l2->next : NULL;
+            if (l1) l1 = l1->next;
+            if (l2) l2 = l2->next;
+        }
+        return dummy.next;
     }
-
-    return head.next;
-  }
 };
 // @lc code=end

@@ -3,7 +3,7 @@
  *
  * [141] 环形链表
  */
-#include "cpp_includes.h"
+
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -16,8 +16,8 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        if (!head) return false;
-
+        if (!head || !head->next) return false;
+        
         auto fast = head;
         auto slow = head;
 
@@ -25,7 +25,8 @@ public:
             fast = fast->next->next;
             slow = slow->next;
 
-            if (fast == slow) return true;
+            if (fast == slow)
+                return true;
         }
 
         return false;

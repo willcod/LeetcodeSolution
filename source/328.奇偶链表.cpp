@@ -24,15 +24,13 @@ public:
         auto even = head->next;
         auto evenHead = head->next;
 
-        while (even && even->next) {
+        while (odd->next && even->next) {
             odd->next = even->next;
             odd = odd->next;
-            even->next= odd->next;
+            even->next = odd->next;
             even = even->next;
         }
-
         odd->next = evenHead;
-        
         return head;
     }
 };

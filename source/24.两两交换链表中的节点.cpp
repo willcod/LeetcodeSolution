@@ -20,22 +20,12 @@ public:
     ListNode* swapPairs(ListNode* head) {
         if (!head || !head->next) return head;
 
-        ListNode dummy(0);
-        dummy.next = head;
-        auto* p = &dummy;
+        auto next = head->next;
+        head->next = swapPairs(next->next);
+        next->next = head;
 
-        while (p->next && p->next->next) {
-            auto n1 = p->next;
-            auto n2 = p->next->next;
-
-            p->next = n2;
-            n1->next = n2->next;
-            n2->next = n1;
-            p = n1;
-        }
-
-        return dummy.next;
-    }   
+        return next;
+    }
 };
 // @lc code=end
 
