@@ -6,22 +6,22 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     int leastInterval(vector<char>& tasks, int n) {
-        unordered_map<char, int> map;
-        int count = 0;
+        unordered_map<char, int> hash;
+        int maxCount = 0;
         for (char t : tasks) {
-            map[t]++;
-            count = max(count, map[t]);
+            hash[t]++;
+            maxCount = max(maxCount, hash[t]);
         }
 
-        int res = (count - 1) * (n + 1);
+        int cycles = (maxCount - 1) * (n + 1);
 
-        for (auto t : map) {
-            if (t.second == count) res++;
+        for (auto kv : hash) {
+            if (kv.second == maxCount) cycles += 1;
         }
-        return max((int)tasks.size(), res);
+
+        return max((int)tasks.size(), cycles);
     }
 };
 // @lc code=end
-

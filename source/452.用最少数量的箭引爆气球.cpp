@@ -6,24 +6,21 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-  public:
-    int findMinArrowShots(vector<vector<int>> &points) {
-        if (points.size() < 2)
-            return points.size();
-
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
         sort(points.begin(), points.end());
 
-        int count = points.size();
+        int n = points.size();
+
         for (int i = 1; i < points.size(); i++) {
-            if (points[i][0] <= points[i - 1][1]) {
-                count--;
-                if (points[i][1] > points[i - 1][1]) {
-                    points[i][1] = points[i - 1][1];
-                }
-            }
+            if (points[i-1][1] >= points[i][0]) {
+                n--;
+                points[i][1] = min(points[i][1], points[i-1][1]);
+            } 
         }
 
-        return count;
+        return n;
     }
 };
 // @lc code=end
+

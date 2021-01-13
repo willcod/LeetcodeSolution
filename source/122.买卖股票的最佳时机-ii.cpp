@@ -6,14 +6,18 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  int maxProfit(vector<int>& prices) {
-    int maxP = 0;
-    for (int i = 1; i < prices.size(); i++) {
-      if (prices[i] > prices[i - 1]) maxP += prices[i] - prices[i - 1];
-    }
+   public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        if (n < 1) return 0;
 
-    return maxP;
-  }
+        int profit = 0;
+        for (int i = 1; i < n; i++) {
+            if (prices[i] > prices[i - 1]) {
+                profit += prices[i] - prices[i - 1];
+            }
+        }
+        return profit;
+    }
 };
 // @lc code=end

@@ -6,20 +6,22 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  int jump(vector<int>& nums) {
-    int count = 0;
-    int end = 0;
-    int rightmost = 0;
+public:
+    int jump(vector<int>& nums) {
+        int count = 0;
+        int start = 0;
+        int end = 0;
 
-    for (int i = 0; i < nums.size() - 1; i++) {
-      rightmost = max(rightmost, i + nums[i]);
-      if (i == end) {
-        end = rightmost;
-        count++;
-      }
+        for (int i = 0; i <nums.size()-1; i++) {
+            end = max(end, nums[i]+i);
+            if (start == i) {
+                count++;
+                start = end;
+            }
+        }
+
+        return count;
     }
-    return count;
-  }
 };
 // @lc code=end
+

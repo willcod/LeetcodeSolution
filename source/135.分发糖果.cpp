@@ -11,7 +11,6 @@ class Solution {
         int n = ratings.size();
 
         vector f(n, 1);
-
         for (int i = 1; i < n; i++) {
             if (ratings[i] > ratings[i - 1]) {
                 f[i] = f[i - 1] + 1;

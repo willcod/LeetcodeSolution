@@ -9,25 +9,25 @@ class Solution {
    public:
     string removeDuplicateLetters(string s) {
         unordered_map<char, int> counter;
-        unordered_map<char, bool> had;
+        unordered_map<char, bool> visited;
 
         for (auto c : s) {
             counter[c]++;
-            had[c] = false;
+            visited[c] = false;
         }
 
-        string res = "";
+        string res;
         for (auto c : s) {
             counter[c]--;
-            if (had[c]) continue;
+            if (visited[c]) continue;
 
-            while (res.length() && res.back() > c && counter[res.back()] > 0) {
-                had[res.back()] = false;
+            while (!res.empty() && res.back() > c && counter[res.back()] > 0) {
+                visited[res.back()] = false;
                 res.pop_back();
             }
 
             res.push_back(c);
-            had[c] = true;
+            visited[res.back()] = true;
         }
 
         return res;

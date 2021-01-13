@@ -6,26 +6,29 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     vector<int> partitionLabels(string S) {
-        vector<int> pos(26, 0);
-        for (int i = 0; i < S.length(); i++) {
-            pos[S[i] - 'a'] = i;
-        }
+        vector<int> res;
+        int n = S.length();
+        if (n < 2) return {n};
 
-        vector<int> parts;
+        unordered_map<char, int> pos;
+        for (int i = 0; i < n; i++) {
+            pos[S[i]] = i;
+        }
 
         int start = 0;
         int end = 0;
-        for (int i = 0; i < S.length(); i++) {
-            end = max(end, pos[S[i] - 'a']);
+        for (int i = 0; i < n; i++) {
+            end = max(end, pos[S[i]]);
             if (end == i) {
-                parts.push_back(end - start + 1);
-                start = end + 1;
+                res.emplace_back(end - start + 1);
+                start = i + 1;
             }
         }
 
-        return parts;
+        return res;
     }
 };
 // @lc code=end
+
