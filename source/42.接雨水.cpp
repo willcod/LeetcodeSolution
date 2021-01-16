@@ -9,25 +9,25 @@ class Solution {
    public:
     int trap(vector<int>& height) {
         int n = height.size();
-        if (n < 2) return 0;
+        if (n <= 2) return 0;
 
-        stack<int> stk;
+        int left = 0;
+        int right = n - 1;
+
+        int leftArea = 0;
+        int rightArea = 0;
 
         int water = 0;
-        for (int i = 0; i < n; i++) {
-            while (stk.size() && height[stk.top()] < height[i]) {
-                int cur = stk.top();
-                stk.pop();
-                if (!stk.empty()) {
-                    int l = stk.top();
-                    int r = i;
-                    water += (r - l - 1) * (min(height[l], height[r]) - height[cur]);
-                }
+        while (left < right) {
+            leftArea = max(leftArea, height[left]);
+            rightArea = max(rightArea, height[right]);
+
+            if (leftArea < rightArea) {
+                water += leftArea - height[left++];
+            } else {
+                water += rightArea - height[right--];
             }
-
-            stk.push(i);
         }
-
         return water;
     }
 };

@@ -6,23 +6,26 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     string minWindow(string s, string t) {
         int m = s.length();
-
         int required = t.length();
-        unordered_map<char, int> hash;
-        for (char c : t) {
-            hash[c]++;
+
+        vector<int> remaining(128, 0);
+        for (auto c : t) {
+            remaining[c]++;
         }
 
-        int start = 0, end = 0, begin = 0;
+        int start = 0;
+        int end = 0;
+        int begin = 0;
         int minlen = INT_MAX;
-
         while (end <= m && start < m) {
             if (required) {
                 if (end == m) break;
-                if (--hash[s[end]] >= 0) required--;
+
+                remaining[s[end]]--;
+                if (remaining[s[end]] >= 0) required--;
                 end++;
             } else {
                 if (end - start < minlen) {
@@ -30,15 +33,12 @@ public:
                     begin = start;
                 }
 
-                if (++hash[s[start]] > 0) required++;
+                remaining[s[start]]++;
+                if (remaining[s[start]] > 0) required++;
                 start++;
             }
         }
-
-
         return minlen == INT_MAX ? "" : s.substr(begin, minlen);
-
     }
 };
 // @lc code=end
-
