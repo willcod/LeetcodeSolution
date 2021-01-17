@@ -6,20 +6,23 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     int coinChange(vector<int>& coins, int amount) {
         if (amount < 1) return 0;
-        vector f(amount + 1, amount + 1);
+
+        vector f(amount+1, amount+1);
         f[0] = 0;
 
-        for (int i = 0; i <= amount; i++) {
-            for (int c : coins) {
-                if (i >= c) {
-                    f[i] = min(f[i], f[i - c] + 1);
+        for (int i = 1; i <= amount; i++) {
+            for (auto coin : coins) {
+                if (i >= coin) {
+                    f[i] = min(f[i], f[i-coin]+1);
                 }
             }
         }
-        return f[amount] == amount + 1 ? -1 : f[amount];
+
+        return f[amount] == amount+1?-1:f[amount];
     }
 };
 // @lc code=end
+
