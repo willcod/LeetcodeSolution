@@ -12,17 +12,16 @@ class Solution {
         int n = text2.length();
 
         vector f(m + 1, vector(n + 1, 0));
-
+        int maxlen = 0;
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 if (text1[i - 1] == text2[j - 1]) {
                     f[i][j] = f[i - 1][j - 1] + 1;
                 } else {
-                    f[i][j] = max({f[i - 1][j - 1], f[i][j - 1], f[i - 1][j]});
+                    f[i][j] = max(f[i - 1][j], f[i][j - 1]);
                 }
             }
         }
-
         return f[m][n];
     }
 };
