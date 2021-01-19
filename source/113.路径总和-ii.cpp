@@ -21,23 +21,25 @@ class Solution {
 
         vector<vector<int>> res;
         vector<int> path;
+
         pathSum(root, sum, res, path);
         return res;
     }
 
-    void pathSum(TreeNode* node, int sum, vector<vector<int>>& res,
-                 vector<int>& path) 
-    {
-        if (!node) return;
-        path.push_back(node->val);
-        sum -= node->val;
+    void pathSum(TreeNode* root, int sum, vector<vector<int>>& res,
+                 vector<int>& path) {
+        if (!root) return;
 
-        if (sum == 0 && !node->left && !node->right) {
+        sum -= root->val;
+        path.push_back(root->val);
+
+        if (sum == 0 && !root->left && !root->right) {
             res.push_back(path);
+            return;
         }
 
-        pathSum(node->left, sum, res, path);
-        pathSum(node->right, sum, res, path);
+        pathSum(root->left, sum, res, path);
+        pathSum(root->right, sum, res, path);
 
         path.pop_back();
     }

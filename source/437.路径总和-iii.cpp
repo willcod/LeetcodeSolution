@@ -22,18 +22,16 @@ class Solution {
     int pathSum(TreeNode* root, int sum) {
         if (!root) return 0;
 
-        return countPath(root, sum) + pathSum(root->left, sum) +
-               pathSum(root->right, sum);
+        int count = countPath(root, sum);
+        return count + pathSum(root->left, sum) + pathSum(root->right, sum);
     }
 
     int countPath(TreeNode* root, int sum) {
         if (!root) return 0;
 
-        sum -= root->val;
-
-        int res = sum == 0;
-
-        return res + countPath(root->left, sum) + countPath(root->right, sum);
+        int res = root->val == sum;
+        return res + countPath(root->left, sum - root->val) +
+               countPath(root->right, sum - root->val);
     }
 };
 // @lc code=end
