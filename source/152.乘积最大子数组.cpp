@@ -8,18 +8,20 @@
 class Solution {
    public:
     int maxProduct(vector<int>& nums) {
-        int Max = nums[0];
-        int Min = nums[0];
+        if (nums.empty()) return 0;
+        int n = nums.size();
+
         int res = nums[0];
-        for (int i = 1; i < nums.size(); i++) {
-            if (nums[i] < 0) swap(Max, Min);
+        int imax = nums[0];
+        int imin = nums[0];
+        for (int i = 1; i < n; i++) {
+            if (nums[i] < 0) swap(imax, imin);
 
-            Max = max(Max * nums[i], nums[i]);
-            Min = min(Min * nums[i], nums[i]);
+            imax = max(nums[i], nums[i] * imax);
+            imin = min(nums[i], nums[i] * imin);
 
-            res = max(res, Max);
+            res = max(res, imax);
         }
-
         return res;
     }
 };
