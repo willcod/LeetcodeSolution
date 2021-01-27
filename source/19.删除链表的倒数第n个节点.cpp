@@ -16,29 +16,29 @@
  * };
  */
 class Solution {
-public:
+   public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode dummy(0);
+        ListNode dummy;
         dummy.next = head;
 
-        auto front = &dummy;
-        auto back = &dummy;
+        auto fast = &dummy;
+        auto slow = &dummy;
 
-        for (int  i = 0; i < n; i++) {
-            front = front->next;
+        while (n--) {
+            fast = fast->next;
         }
 
-        while (front->next) {
-            front = front->next;
-            back = back->next;
+        while (fast) {
+            fast = fast->next;
+            slow = slow->next;
         }
 
-        auto delNode = back->next;
-        back->next = back->next->next;
-        delete delNode;
+        auto skip = slow->next;
+        slow->next = slow->next->next;
 
-        return dummy.next;
+        delete skip;
+
+        return head;
     }
 };
 // @lc code=end
-

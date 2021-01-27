@@ -18,11 +18,11 @@ class Solution {
     ListNode* reverseList(ListNode* head) {
         if (!head || !head->next) return head;
 
-        auto ret = reverseList(head->next);
+        auto reverse = reverseList(head->next);
         head->next->next = head;
         head->next = nullptr;
 
-        return ret;
+        return reverse;
     }
 };
 // @lc code=end

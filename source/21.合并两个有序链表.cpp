@@ -16,7 +16,7 @@
  * };
  */
 class Solution {
-public:
+   public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         if (!l1) return l2;
         if (!l2) return l1;
@@ -31,4 +31,3 @@ public:
     }
 };
 // @lc code=end
-

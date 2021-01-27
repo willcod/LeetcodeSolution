@@ -19,14 +19,11 @@
  */
 class Solution {
    public:
-    TreeNode* pre = nullptr;
-
     bool isValidBST(TreeNode* root) {
         if (!root) return true;
 
         bool left = isValidBST(root->left);
-
-        if (pre) {
+        if (pre != nullptr) {
             if (root->val <= pre->val) return false;
         }
 
@@ -34,5 +31,8 @@ class Solution {
 
         return left && isValidBST(root->right);
     }
+
+   private:
+    TreeNode* pre = nullptr;
 };
 // @lc code=end

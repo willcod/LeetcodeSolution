@@ -18,21 +18,25 @@
 class Solution {
    public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode dummy(0);
-        auto p = &dummy;
+        if (!l1) return l2;
+        if (!l2) return l1;
 
         int sum = 0;
+        ListNode dummy(0);
+        ListNode* p = &dummy;
+
         while (l1 || l2 || sum) {
             if (l1) sum += l1->val;
             if (l2) sum += l2->val;
 
             p->next = new ListNode(sum % 10);
-            p = p->next;
             sum /= 10;
+            p = p->next;
 
             if (l1) l1 = l1->next;
             if (l2) l2 = l2->next;
         }
+
         return dummy.next;
     }
 };
