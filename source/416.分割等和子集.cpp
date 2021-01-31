@@ -6,25 +6,26 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     bool canPartition(vector<int>& nums) {
         int sum = accumulate(nums.begin(), nums.end(), 0);
         if (sum % 2) return false;
-        int target = sum / 2;
 
-        int n = nums.size();
-        vector f(n + 1, vector(target + 1, false));
-        f[0][0] = true;
+        int target = sum/2;
+        sort(nums.begin(), nums.end());
 
-        for (int i = 1; i <= n; i++) {
-            for (int j = 0; j <= target; j++) {
-                f[i][j] = f[i - 1][j];
-                if (j >= nums[i - 1]) {
-                    f[i][j] = f[i][j] || f[i - 1][j - nums[i - 1]];
+        vector f(target+1, 0);
+        f[0] = 1;
+
+        for (int num : nums) {
+            for (int i = target; i >= 0; i--) {
+                if (i >= num) {
+                    f[i] = f[i] || f[i-num];
                 }
             }
         }
-        return f[n][target];
+        return f[target];
     }
 };
 // @lc code=end
+

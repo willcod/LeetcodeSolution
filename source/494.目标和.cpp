@@ -13,12 +13,13 @@ class Solution {
 
         int target = (sum + S) >> 1;
         int n = nums.size();
+
         vector f(target + 1, 0);
         f[0] = 1;
 
         for (int num : nums) {
-            for (int i = target; i >= num; i--) {
-                f[i] += f[i - num];
+            for (int j = target; j >= num; j--) {
+                f[j] += f[j - num];
             }
         }
         return f[target];
