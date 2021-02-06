@@ -8,13 +8,11 @@
 class Solution {
    public:
     int change(int amount, vector<int>& coins) {
-        int n = coins.size();
         vector f(amount + 1, 0);
-
         f[0] = 1;
-        for (auto coin : coins) {
-            for (int j = coin; j <= amount; j++) {
-                f[j] += f[j - coin];
+        for (int coin : coins) {
+            for (int i = coin; i <= amount; i++) {
+                f[i] += f[i - coin];
             }
         }
         return f[amount];

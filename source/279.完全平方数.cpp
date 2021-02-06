@@ -6,13 +6,14 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     int numSquares(int n) {
-        vector f(n+1, 0);
-        for (int i = 1; i <= n; i++) {
+        vector f(n + 1, 0);
+
+        for (int i = 0; i <= n; i++) {
             f[i] = i;
-            for (int j = 1; i - j*j >= 0; j++) {
-                f[i] = min(f[i], f[i-j*j]+1);
+            for (int j = 0; i >= j * j; j++) {
+                f[i] = min(f[i], f[i - j * j] + 1);
             }
         }
 
@@ -20,4 +21,3 @@ public:
     }
 };
 // @lc code=end
-
