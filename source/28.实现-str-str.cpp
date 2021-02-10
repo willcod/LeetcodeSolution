@@ -8,10 +8,11 @@
 class Solution {
    public:
     int strStr(string haystack, string needle) {
-        if (needle == "") return 0;
+        if (needle.empty()) return 0;
 
         int hlen = haystack.length();
         int nlen = needle.length();
+
         for (int i = 0; i <= (hlen - nlen); i++) {
             if (haystack.substr(i, nlen) == needle) return i;
         }
