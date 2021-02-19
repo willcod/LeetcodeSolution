@@ -8,24 +8,22 @@
 class Solution {
    public:
     int lengthOfLongestSubstring(string s) {
-        int n = s.length();
-        if (n < 2) return n;
-
+        if (s.empty()) return 0;
+        unordered_set<char> set;
         int start = 0;
         int end = 0;
-        int maxlen = 1;
+        int maxlen = 0;
 
-        unordered_set<char> set;
-        while (start < n && end < n) {
+        while (end < s.length()) {
             if (set.count(s[end]) == 0) {
                 set.insert(s[end]);
                 end++;
                 maxlen = max(maxlen, end - start);
             } else {
-                set.erase(s[start++]);
+                set.erase(s[start]);
+                start++;
             }
         }
-
         return maxlen;
     }
 };

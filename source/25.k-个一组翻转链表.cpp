@@ -10,37 +10,35 @@
  * struct ListNode {
  *     int val;
  *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
 class Solution {
-public:
+   public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        ListNode front(0);
-        front.next = head;
-        auto cur = &front;
-        auto last = &front;
+        ListNode dummy;
+        dummy.next = head;
+        auto cur = &dummy, last = &dummy;
 
         int count = 0;
         while (cur) {
-            cur = cur->next;
             count++;
+            cur = cur->next;
 
             if (count == k && cur) {
-                auto mid = last->next;
-
-                while(--count) {
+                auto next = last->next;
+                while (--count) {
                     auto temp = last->next;
                     last->next = temp->next;
                     temp->next = cur->next;
                     cur->next = temp;
-
                 }
-                last = cur = mid;
+                last = cur = next;
             }
         }
-        return front.next;
+        return dummy.next;
     }
 };
 // @lc code=end
-
