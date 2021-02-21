@@ -10,6 +10,7 @@ class Solution {
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> res;
         vector<string> nQueens(n, string(n, '.'));
+
         backtracking(res, nQueens, n, 0);
         return res;
     }
@@ -31,7 +32,7 @@ class Solution {
     }
 
     bool isValid(vector<string>& nQueens, int row, int col, int n) {
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < row; i++) {
             if (nQueens[i][col] == 'Q') return false;
         }
 
