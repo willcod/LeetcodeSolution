@@ -3,7 +3,7 @@
  *
  * [222] 完全二叉树的节点个数
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -15,21 +15,19 @@
  * };
  */
 class Solution {
-   public:
+public:
     int countNodes(TreeNode* root) {
-        if (!root) return 0;
         int count = 0;
-        travel(root, count);
-
+        traverse(root, count);
         return count;
     }
 
-    void travel(TreeNode* root, int& count) {
-        if (!root) return;
+    void traverse(TreeNode* node, int& count) {
+        if (!node) return;
+        traverse(node->left, count);
         count++;
-
-        if (root->left) travel(root->left, count);
-        if (root->right) travel(root->right, count);
+        traverse(node->right, count);
     }
 };
 // @lc code=end
+

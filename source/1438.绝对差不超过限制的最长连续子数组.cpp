@@ -8,9 +8,11 @@
 class Solution {
    public:
     int longestSubarray(vector<int>& nums, int limit) {
-        multiset<int> set;
-        int end = 0, start = 0;
+        int start = 0;
+        int end = 0;
         int maxlen = 0;
+
+        multiset<int> set;
         while (end < nums.size()) {
             set.insert(nums[end]);
             while (*set.rbegin() - *set.begin() > limit) {
@@ -20,7 +22,6 @@ class Solution {
             maxlen = max(maxlen, end - start + 1);
             end++;
         }
-
         return maxlen;
     }
 };

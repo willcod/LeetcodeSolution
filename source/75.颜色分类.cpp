@@ -6,20 +6,21 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     void sortColors(vector<int>& nums) {
-        int p0 = 0;
-        int p2 = nums.size() - 1;
+        int zero = 0;
+        int two = nums.size() - 1;
 
-        for (int i = 0; i <= p2; i++) {
-            while (i <= p2 && nums[i] == 2) {
-                swap(nums[i], nums[p2--]);
+        for (int i = 0; i <= two; i++) {
+            while (i <= two && nums[i] == 2) {
+                swap(nums[i], nums[two--]);
             }
 
             if (nums[i] == 0) {
-                swap(nums[i], nums[p0++]);
+                swap(nums[i], nums[zero++]);
             }
         }
     }
 };
 // @lc code=end
+
