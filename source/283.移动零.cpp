@@ -6,16 +6,21 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  void moveZeroes(vector<int>& nums) {
-    int j = 0;
-    for (int i = 0; i < nums.size(); i++) {
-      if (nums[i]) nums[j++] = nums[i];
-    }
+public:
+    void moveZeroes(vector<int>& nums) {
+        if (nums.size() < 2) return;
 
-    for (; j < nums.size(); j++) {
-      nums[j] = 0;
+        int left = 0;
+        for (int right = 0; right < nums.size(); right++) {
+            if (nums[right] != 0) {
+                nums[left++] = nums[right];
+            }
+        }
+
+        for (int i = left; i < nums.size(); i++) {
+            nums[i] = 0;
+        }
     }
-  }
 };
 // @lc code=end
+
