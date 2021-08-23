@@ -6,21 +6,16 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-public:
+   public:
     int strStr(string haystack, string needle) {
-        int m = haystack.length();
-        int n = needle.length();
+        if (needle.empty()) return 0;
+        if (haystack.length() < needle.length()) return -1;
 
-        if (n == 0) return 0;
-
-        for (int i = 0; i <= m - n; i++) {
-            if (haystack.substr(i, n) == needle) {
-                return i;
-            }
+        for (int i = 0; i <= (haystack.length() - needle.length()); i++) {
+            if (haystack.substr(i, needle.length()) == needle) return i;
         }
 
         return -1;
     }
 };
 // @lc code=end
-
