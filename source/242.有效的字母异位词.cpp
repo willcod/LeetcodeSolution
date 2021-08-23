@@ -10,19 +10,10 @@ public:
     bool isAnagram(string s, string t) {
         if (s.length() != t.length()) return false;
 
-        unordered_map<char, int> stat;
-        for(int i = 0; i < s.length(); i++) {
-            stat[s[i]]++;
-            stat[t[i]]--;
-        }
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
 
-        for (auto kv : stat) {
-            if (kv.second != 0) {
-                return false;
-            }
-        }
-
-        return true;
+        return s == t;
     }
 };
 // @lc code=end
