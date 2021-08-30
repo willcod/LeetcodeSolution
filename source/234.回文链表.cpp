@@ -18,23 +18,44 @@
 class Solution {
  public:
   bool isPalindrome(ListNode* head) {
-    stack<ListNode*> stk;
+      if (!head || !head->next) return true;
 
-    ListNode* cur = head;
+      auto pre = head;
+      auto slow = head;
+      auto fast = head;
+      while (fast && fast->next) {
+          pre = slow;
+          slow = slow->next;
+          fast = fast->next->next;
+      }
 
-    while (cur) {
-      stk.push(cur);
-      cur = cur->next;
-    }
+      pre->next = NULL;
+      auto cur1 = head;
+      auto cur2 = reverseList(slow);
 
-    cur = head;
-    while (cur) {
-      if (stk.top()->val != cur->val) return false;
+      if (!fast) slow = slow->next;
 
-      stk.pop();
-      cur = cur->next;
-    }
-    return true;
+      while(cur1&&cur2) {
+          if (cur1->val != cur2->val) return false;
+          cur1 = cur1->next;
+          cur2 = cur2->next;
+      }
+
+      return true;
+  }
+
+  ListNode* reverseList(ListNode* head) {
+      if (!head || !head->next) return head;
+
+      auto cur = head;
+      ListNode* pre = NULL;
+      while (cur) {
+          auto next = cur->next;
+          cur->next = pre;
+          pre = cur;
+          cur = next;
+      }
+      return pre;
   }
 };
 // @lc code=end
