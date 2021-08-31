@@ -13,26 +13,23 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
-   public:
+public:
+    long pre = LONG_MIN;
+
     bool isValidBST(TreeNode* root) {
         if (!root) return true;
+        
+        if (!isValidBST(root->left)) return false;
 
-        bool left = isValidBST(root->left);
-        if (pre != nullptr) {
-            if (root->val <= pre->val) return false;
-        }
+        if (root->val <= pre) return false;
+        pre = root->val;
 
-        pre = root;
-
-        return left && isValidBST(root->right);
+        return isValidBST(root->right);
     }
-
-   private:
-    TreeNode* pre = nullptr;
 };
 // @lc code=end
+
