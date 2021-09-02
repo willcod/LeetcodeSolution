@@ -22,17 +22,16 @@ class Solution {
   TreeNode* sortedArrayToBST(vector<int>& nums) {
     if (nums.empty()) return NULL;
 
-    return sortedArrayToBST(nums, 0, nums.size() - 1);
+    return BuildBST(nums, 0, nums.size() - 1);
   }
 
-  TreeNode* sortedArrayToBST(vector<int>& nums, int lo, int hi) {
+  TreeNode* BuildBST(vector<int>& nums, int lo, int hi) {
     if (lo > hi) return NULL;
 
     int mid = lo + (hi - lo) / 2;
-
     auto node = new TreeNode(nums[mid]);
-    node->left = sortedArrayToBST(nums, lo, mid - 1);
-    node->right = sortedArrayToBST(nums, mid + 1, hi);
+    node->left = BuildBST(nums, lo, mid - 1);
+    node->right = BuildBST(nums, mid + 1, hi);
 
     return node;
   }
