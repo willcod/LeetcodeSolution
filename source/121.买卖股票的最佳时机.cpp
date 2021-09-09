@@ -6,15 +6,17 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     int maxProfit(vector<int>& prices) {
-        int profit = 0;
-        int lowest = prices[0];
+        int min = prices[0];
+        int max = 0;
         for (int i = 1; i < prices.size(); i++) {
-            lowest = min(lowest, prices[i]);
-            profit = max(profit, prices[i] - lowest);
+            max = std::max(max, prices[i] - min);
+            min = std::min(min, prices[i]);
         }
-        return profit;
+
+        return max;
     }
 };
 // @lc code=end
+
