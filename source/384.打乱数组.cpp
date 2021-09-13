@@ -5,25 +5,29 @@
  */
 #include "cpp_includes.h"
 // @lc code=start
-
 class Solution {
- private:
-  vector<int> _nums;
+public:
+    vector<int> _cache;
 
- public:
-  Solution(vector<int>& nums) { _nums = nums; }
-
-  /** Resets the array to its original configuration and return it. */
-  vector<int> reset() { return _nums; }
-
-  /** Returns a random shuffling of the array. */
-  vector<int> shuffle() {
-    vector<int> vec(_nums);
-    for (int i = vec.size() - 1; i > 0; i--) {
-      swap(vec[i], vec[rand() % (i + 1)]);
+    Solution(vector<int>& nums) : _cache(nums) {
+        
     }
-    return vec;
-  }
+    
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {
+        return _cache;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    vector<int> shuffle() {
+        vector<int> shuffled(_cache);
+
+        for (int i = _cache.size() - 1; i > 0; i--) {
+            swap(shuffled[i], shuffled[rand()%(i+1)]);
+        }
+
+        return shuffled;
+    }
 };
 
 /**
@@ -33,3 +37,4 @@ class Solution {
  * vector<int> param_2 = obj->shuffle();
  */
 // @lc code=end
+
