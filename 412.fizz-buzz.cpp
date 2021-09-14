@@ -18,7 +18,7 @@ class Solution {
       } else if ((i + 1) % 5 == 0) {
         result[i] = "Buzz";
       } else {
-        result[i] = to_string(i+1);
+        result[i] = to_string(i + 1);
       }
     }
     return result;
