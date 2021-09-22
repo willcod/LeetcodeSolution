@@ -8,7 +8,15 @@
 class Solution {
 public:
     int hammingDistance(int x, int y) {
-        return bitset<32>(x^y).count();
+        int s = x ^ y;
+        int count = 0;
+
+        while (s) {
+            count += s & 1;
+            s >>= 1;
+        }
+
+        return count;
     }
 };
 // @lc code=end
