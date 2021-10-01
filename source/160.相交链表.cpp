@@ -14,20 +14,19 @@
  * };
  */
 class Solution {
-public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        if (!headA || !headB) return NULL;
+ public:
+  ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    if (!headA || !headB) return NULL;
 
-        auto pA = headA;
-        auto pB = headB;
+    auto pA = headA;
+    auto pB = headB;
 
-        while (pA != pB) {
-            pA = !pA? headB: pA->next;
-            pB = !pB? headA: pB->next;
-        }
-
-        return pA;
+    while (pA != pB) {
+      pA = !pA ? headB : pA->next;
+      pB = !pB ? headA : pB->next;
     }
+
+    return pA;
+  }
 };
 // @lc code=end
-
