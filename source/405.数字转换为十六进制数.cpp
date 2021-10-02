@@ -6,27 +6,20 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  string toHex(int num) {
-    if (num == 0) return "0";
+public:
+    string toHex(int num) {
+        string hexStr = "";
+        string table = "0123456789abcdef";
 
-    string hexStr = "";
-    unsigned int n = num;
-    int base = 16;
-    int remaining = 0;
-    while (n > 0) {
-      remaining = n % base;
-      if (remaining < 10) {
-        hexStr += ('0' + remaining);
-      } else {
-        hexStr += ('a' + (remaining % 10));
-      }
+        unsigned int n = num;
 
-      n /= base;
+        do {
+            hexStr = table[n%16] + hexStr;
+            n /= 16;
+        } while (n > 0);
+
+        return hexStr;
     }
-
-    reverse(hexStr.begin(), hexStr.end());
-    return hexStr;
-  }
 };
 // @lc code=end
+
