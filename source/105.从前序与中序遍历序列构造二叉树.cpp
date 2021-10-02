@@ -11,34 +11,35 @@
  *     int val;
  *     TreeNode *left;
  *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
-   public:
+public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        if (preorder.empty() || inorder.empty()) return {};
-
+        unordered_map<int, int> inHashmap;
         for (int i = 0; i < inorder.size(); i++) {
-            intable[inorder[i]] = i;
+            inHashmap[inorder[i]] = i;
         }
-        int ps = 0;
-        return build(preorder, 0, inorder.size() - 1, ps);
+
+        int preorderIndex = 0;
+        return buildTree(preorder, inHashmap, 0, inorder.size()-1, preorderIndex);
     }
 
-    TreeNode* build(vector<int>& preorder, int is, int ie, int& ps) {
-        if (ps >= preorder.size() || is > ie) return nullptr;
+    TreeNode* buildTree(vector<int>& preorder, unordered_map<int,int>& inhashMap, int is, int ie, int& ps) {
+        if (ps == preorder.size() || is > ie) return nullptr;
 
-        auto root = new TreeNode(preorder[ps]);
-        int pos = intable[preorder[ps]];
+        auto node = new TreeNode(preorder[ps]);
+        int inorderIndex = inhashMap[preorder[ps]];
         ps++;
-        root->left = build(preorder, is, pos - 1, ps);
-        root->right = build(preorder, pos + 1, ie, ps);
 
-        return root;
+        node->left = buildTree(preorder, inhashMap, is, inorderIndex-1, ps);
+        node->right = buildTree(preorder, inhashMap, inorderIndex+1, ie, ps);
+
+        return node;
     }
-
-   private:
-    unordered_map<int, int> intable;
 };
 // @lc code=end
+
