@@ -24,37 +24,38 @@ public:
 */
 
 class Solution {
-   public:
+public:
     Node* connect(Node* root) {
-        //层序遍历
-        if (!root) return NULL;
+        if (!root) return root;
 
         queue<Node*> q;
         q.push(root);
 
-        Node *node, *pre;
+        Node *pre, *cur;
         while (!q.empty()) {
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
                 if (i == 0) {
                     pre = q.front();
                     q.pop();
-                    node = pre;
+                    cur = pre;
                 } else {
-                    node = q.front();
+                    cur = q.front();
                     q.pop();
 
-                    pre->next = node;
+                    pre->next = cur;
                     pre = pre->next;
                 }
-                if (node->left) q.push(node->left);
-                if (node->right) q.push(node->right);
+
+                if (cur->left) q.push(cur->left);
+                if (cur->right) q.push(cur->right);
             }
-            pre->next = NULL;
+
+            pre->next = nullptr;
         }
 
-        // 没有创建新树，所以可以先直接写return root
         return root;
     }
 };
 // @lc code=end
+
