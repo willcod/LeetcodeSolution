@@ -91,44 +91,56 @@
 using namespace std;
 
 struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
 class Node {
-   public:
-    int val;
-    Node *left;
-    Node *right;
-    Node *next;
-    Node *random;
-    vector<Node*> neighbors;
+ public:
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+  Node *random;
+  vector<Node *> neighbors;
 
-    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+  Node() : val(0), left(NULL), right(NULL), next(NULL) {}
 
-    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+  Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
 
-    Node(int _val, Node *_left, Node *_right, Node *_next)
-        : val(_val), left(_left), right(_right), next(_next) {}
+  Node(int _val, Node *_left, Node *_right, Node *_next)
+      : val(_val), left(_left), right(_right), next(_next) {}
 };
 struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(NULL) {}
+  int val;
+  ListNode *next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(NULL) {}
 };
 
-
-void print(vector<int>& f) {
-    cout << endl << "|";
-    for (int i = 0; i < f.size(); i++) {
-        cout << i << "|";
-    }
-    cout << endl << "|";
-    for (int i = 0; i < f.size(); i++) {
-        cout << f[i] << "|";
-    }
-    cout << endl;
+void print(vector<int> &f) {
+  cout << endl << "|";
+  for (int i = 0; i < f.size(); i++) {
+    cout << i << "|";
+  }
+  cout << endl << "|";
+  for (int i = 0; i < f.size(); i++) {
+    cout << f[i] << "|";
+  }
+  cout << endl;
 }
+
+class Iterator {
+  struct Data;
+  Data *data;
+
+ public:
+  Iterator(const vector<int> &nums);
+  Iterator(const Iterator &iter);
+  // Returns the next element in the iteration.
+  int next();
+  // Returns true if the iteration has more elements.
+  bool hasNext() const;
+};
