@@ -24,38 +24,37 @@ public:
 */
 
 class Solution {
-public:
-    Node* connect(Node* root) {
-        if (!root) return root;
+ public:
+  Node* connect(Node* root) {
+    if (!root) return root;
 
-        queue<Node*> q;
-        q.push(root);
+    queue<Node*> q;
+    q.push(root);
 
-        Node *pre, *cur;
-        while (!q.empty()) {
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                if (i == 0) {
-                    pre = q.front();
-                    q.pop();
-                    cur = pre;
-                } else {
-                    cur = q.front();
-                    q.pop();
+    Node *pre, *cur;
+    while (!q.empty()) {
+      int size = q.size();
+      for (int i = 0; i < size; i++) {
+        if (i == 0) {
+          pre = q.front();
+          q.pop();
+          cur = pre;
+        } else {
+          cur = q.front();
+          q.pop();
 
-                    pre->next = cur;
-                    pre = pre->next;
-                }
-
-                if (cur->left) q.push(cur->left);
-                if (cur->right) q.push(cur->right);
-            }
-
-            pre->next = nullptr;
+          pre->next = cur;
+          pre = pre->next;
         }
 
-        return root;
+        if (cur->left) q.push(cur->left);
+        if (cur->right) q.push(cur->right);
+      }
+
+      pre->next = nullptr;
     }
+
+    return root;
+  }
 };
 // @lc code=end
-
