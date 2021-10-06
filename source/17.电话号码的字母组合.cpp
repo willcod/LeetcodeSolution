@@ -3,34 +3,35 @@
  *
  * [17] 电话号码的字母组合
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
+ private:
+  const string keyboard[10] = {"",    "!@#", "abc",  "def", "ghi",
+                               "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
  public:
   vector<string> letterCombinations(string digits) {
     if (digits.empty()) return {};
+    vector<string> res;
 
-    vector<string> result;
-    getCombination(result, digits, "", 0);
-    return result;
+    string str;
+    letterCombinations(res, str, digits, 0);
+
+    return res;
   }
 
- private:
-  void getCombination(vector<string>& result, string digits, string s,
-                      int index) {
-    if (index == digits.length()) {
-      result.push_back(s);
+  void letterCombinations(vector<string>& res, string str, string digits,
+                          int index) {
+    if (index >= digits.size()) {
+      res.push_back(str);
       return;
     }
 
-    string letters = keyboard[digits[index] - '0'];
-    for (auto l : letters) {
-      getCombination(result, digits, s + l, index + 1);
+    string chars = keyboard[digits[index] - '0'];
+    for (auto c : chars) {
+      letterCombinations(res, str + c, digits, index + 1);
     }
   }
-
- private:
-  string keyboard[10] = {"",    "",    "abc",  "def", "ghi",
-                         "jkl", "mno", "pqrs", "tuv", "wxyz"};
 };
 // @lc code=end
