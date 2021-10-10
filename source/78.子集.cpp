@@ -6,26 +6,24 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
- public:
-  vector<vector<int>> subsets(vector<int>& nums) {
-    vector<vector<int>> res;
-    vector<int> path;
-    subsets(nums, res, path, 0);
-    return res;
-  }
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> path;
 
-  void subsets(vector<int>& nums, vector<vector<int>>& res, vector<int>& path,
-               int index) {
-                   
-    res.push_back(path);
+        subsets(res,path,nums,0);
 
-    if (index == nums.size()) return;
-
-    for (int i = index; i < nums.size(); i++) {
-      path.push_back(nums[i]);
-      subsets(nums, res, path, i + 1);
-      path.pop_back();
+        return res;
     }
-  }
+
+    void subsets(vector<vector<int>>& res,vector<int>& path, vector<int>& nums, int index) {
+        res.push_back(path);
+        for (int i = index; i < nums.size(); i++) {
+            path.push_back(nums[i]);
+            subsets(res, path, nums, i+1);
+            path.pop_back();
+        }
+    }
 };
 // @lc code=end
+
