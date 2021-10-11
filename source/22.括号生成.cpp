@@ -6,22 +6,22 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
-    vector<string> generateParenthesis(int n) {
-        vector<string> res;
-        string path;
-        generateParent(res, path, n, 0);
-        return res;
+ public:
+  vector<string> generateParenthesis(int n) {
+    vector<string> res;
+    string str;
+    generateParenthesis(res, str, n, 0);
+    return res;
+  }
+
+  void generateParenthesis(vector<string>& res, string str, int l, int r) {
+    if (!l && !r) {
+      res.push_back(str);
+      return;
     }
 
-    void generateParent(vector<string>& res, string path, int open, int close) {
-        if (!open && !close) {
-            res.push_back(path);
-            return;
-        }
-
-        if (open) generateParent(res, path + '(', open - 1, close + 1);
-        if (close) generateParent(res, path + ')', open, close - 1);
-    }
+    if (l) generateParenthesis(res, str + '(', l - 1, r + 1);
+    if (r) generateParenthesis(res, str + ')', l, r - 1);
+  }
 };
 // @lc code=end

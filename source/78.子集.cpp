@@ -9,22 +9,19 @@ class Solution {
  public:
   vector<vector<int>> subsets(vector<int>& nums) {
     vector<vector<int>> res;
-    vector<int> path;
-    subsets(nums, res, path, 0);
+    vector<int> sub;
+    subsets(res, sub, nums, 0);
     return res;
   }
 
-  void subsets(vector<int>& nums, vector<vector<int>>& res, vector<int>& path,
+  void subsets(vector<vector<int>>& res, vector<int>& sub, vector<int>& nums,
                int index) {
-                   
-    res.push_back(path);
-
-    if (index == nums.size()) return;
+    res.push_back(sub);
 
     for (int i = index; i < nums.size(); i++) {
-      path.push_back(nums[i]);
-      subsets(nums, res, path, i + 1);
-      path.pop_back();
+      sub.push_back(nums[i]);
+      subsets(res, sub, nums, i + 1);
+      sub.pop_back();
     }
   }
 };
