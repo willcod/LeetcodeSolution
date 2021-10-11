@@ -6,39 +6,41 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
-    bool exist(vector<vector<char>>& board, string word) {
-        int m = board.size();
-        int n = board[0].size();
+ public:
+  bool exist(vector<vector<char>>& board, string word) {
+    int m = board.size();
+    int n = board[0].size();
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (board[i][j] == word[0]) {
-                    if (find_word(board, i, j, word, 0)) return true;
-                }
-            }
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (board[i][j] == word[0]) {
+          if (find(board, word, i, j, 0) == true) {
+            return true;
+          }
         }
-
-        return false;
+      }
     }
 
-    bool find_word(vector<vector<char>>& board, int x, int y, string word,
-                   int index) {
-        if (!isValid(board, x, y) || word[index] != board[x][y]) return false;
-        if (index == word.size() - 1) return true;
+    return false;
+  }
 
-        char c = board[x][y];
-        board[x][y] = '*';
-        bool is_found = find_word(board, x - 1, y, word, index + 1) ||
-                        find_word(board, x + 1, y, word, index + 1) ||
-                        find_word(board, x, y - 1, word, index + 1) ||
-                        find_word(board, x, y + 1, word, index + 1);
-        board[x][y] = c;
-        return is_found;
-    }
+  bool find(vector<vector<char>>& board, string word, int x, int y, int index) {
+    if (index == word.size()) return true;
+    if (!IsValid(board, x, y) || board[x][y] != word[index]) return false;
 
-    bool isValid(vector<vector<char>>& board, int x, int y) {
-        return x >= 0 && y >= 0 && x < board.size() && y < board[0].size();
-    }
+    char c = board[x][y];
+    board[x][y] = '*';
+    bool found = find(board, word, x + 1, y, index + 1) ||
+                 find(board, word, x - 1, y, index + 1) ||
+                 find(board, word, x, y + 1, index + 1) ||
+                 find(board, word, x, y - 1, index + 1);
+    board[x][y] = c;
+
+    return found;
+  }
+
+  bool IsValid(vector<vector<char>>& board, int x, int y) {
+    return x >= 0 && y >= 0 && x < board.size() && y < board[0].size();
+  }
 };
 // @lc code=end
