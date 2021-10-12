@@ -6,29 +6,31 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-    string keyboard[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-public:
-    vector<string> letterCombinations(string digits) {
-        vector<string> res;
-        string str;
+ public:
+  string keyboard[10] = {"",    "",    "abc",  "def", "ghi",
+                         "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
-        if (digits.length() == 0) return {};
+  vector<string> letterCombinations(string digits) {
+    vector<string> res;
+    string str;
 
-        letterCombinations(res, str, digits, 0);
-        return res;
+    if (digits.empty()) return res;
+
+    letterCombinations(res, str, digits, 0);
+    return res;
+  }
+
+  void letterCombinations(vector<string>& res, string str, string digits,
+                          int index) {
+    if (str.length() == digits.length()) {
+      res.push_back(str);
+      return;
     }
 
-    void letterCombinations(vector<string>&res, string str, string digits, int index) {
-        if (str.length() == digits.length()) {
-            res.push_back(str);
-            return;
-        }
-
-        string keys = keyboard[digits[index]-'0'];
-        for (int i = 0; i < keys.length(); i++) {
-            letterCombinations(res, str+keys[i], digits, index+1);
-        }
+    string keys = keyboard[digits[index]-'0'];
+    for (int i = 0; i < keys.length(); i++) {
+        letterCombinations(res, str+keys[i], digits, index+1);
     }
+  }
 };
 // @lc code=end
-

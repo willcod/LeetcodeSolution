@@ -10,6 +10,7 @@ class Solution {
   vector<string> generateParenthesis(int n) {
     vector<string> res;
     string str;
+
     generateParenthesis(res, str, n, 0);
     return res;
   }

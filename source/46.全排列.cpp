@@ -11,6 +11,7 @@ class Solution {
     vector<vector<int>> res;
     vector<int> per;
     vector<bool> used(nums.size(), false);
+
     permute(res, per, nums, used);
     return res;
   }
@@ -23,13 +24,13 @@ class Solution {
     }
 
     for (int i = 0; i < nums.size(); i++) {
-        if (used[i]==false) {
-            used[i] = true;
-            per.push_back(nums[i]);
-            permute(res, per, nums, used);
-            per.pop_back();
-            used[i] = false;
-        }
+      if (used[i] == false) {
+        per.push_back(nums[i]);
+        used[i] = true;
+        permute(res, per, nums, used);
+        used[i] = false;
+        per.pop_back();
+      }
     }
   }
 };
