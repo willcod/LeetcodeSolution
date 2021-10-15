@@ -27,8 +27,6 @@ class Solution {
   bool check(vector<vector<char>>& board, int x, int y, char c) {
     for (int i = 0; i < 9; i++) {
       if (board[i][y] == c) return false;
-    }
-    for (int i = 0; i < 9; i++) {
       if (board[x][i] == c) return false;
     }
 
@@ -39,7 +37,6 @@ class Solution {
         if (board[i + row][j + col] == c) return false;
       }
     }
-
     return true;
   }
 };
