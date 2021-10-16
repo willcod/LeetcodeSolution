@@ -8,26 +8,27 @@
 class Solution {
  public:
   vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-    sort(candidates.begin(), candidates.end());
     vector<vector<int>> res;
-    vector<int> path;
-    combinationSum(res, path, candidates, target, 0);
+    vector<int> sub;
+    sort(candidates.begin(), candidates.end());
+    combination(res, sub, target, candidates, 0);
     return res;
   }
 
-  void combinationSum(vector<vector<int>>& res, vector<int>& path,
-                      vector<int>& nums, int target, int index) {
-    if (path.size() > 0 && target == 0) {
-      res.push_back(path);
+  void combination(vector<vector<int>>& res, vector<int>& sub, int remain,
+                   vector<int>& candidates, int index) {
+    if (index >= candidates.size()) return;
+
+    if (remain == 0) {
+      res.push_back(sub);
+      return;
     }
 
-    // if (index == nums.size() - 1) return;
-
-    for (int i = index; i < nums.size(); i++) {
-      if (nums[i] > target) break;
-      path.push_back(nums[i]);
-      combinationSum(res, path, nums, target - nums[i], i);
-      path.pop_back();
+    for (int i = index; i < candidates.size(); i++) {
+        if (remain < candidates[i]) break;
+        sub.push_back(candidates[i]);
+        combination(res, sub, remain-candidates[i], candidates, i);
+        sub.pop_back();
     }
   }
 };
