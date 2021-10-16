@@ -10,6 +10,7 @@ class Solution {
   vector<vector<int>> subsets(vector<int>& nums) {
     vector<vector<int>> res;
     vector<int> sub;
+
     subsets(res, sub, nums, 0);
     return res;
   }
@@ -17,6 +18,7 @@ class Solution {
   void subsets(vector<vector<int>>& res, vector<int>& sub, vector<int>& nums,
                int index) {
     res.push_back(sub);
+    if (index >= nums.size()) return;
 
     for (int i = index; i < nums.size(); i++) {
       sub.push_back(nums[i]);
