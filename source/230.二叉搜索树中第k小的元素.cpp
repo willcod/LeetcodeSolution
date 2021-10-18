@@ -13,28 +13,30 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
- public:
-  int kthSmallest(TreeNode* root, int k) {
-    if (!root) return 0;
-    priority_queue<int> q;
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        vector<int> vec;
 
-    travel(root, k, q);
+        travel(root, vec);
 
-    return q.top();
-  }
+        sort(vec.begin(), vec.end());
 
-  void travel(TreeNode* node, int k, priority_queue<int>& q) {
-    if (!node) return;
-    q.push(node->val);
-    if (q.size() > k) q.pop();
 
-    if (node->left) travel(node->left, k, q);
-    if (node->right) travel(node->right, k, q);
-  }
+
+        return vec[k-1];
+    }
+
+    void travel(TreeNode* root, vector<int>& vec) {
+        if (!root) return;
+
+        vec.push_back(root->val);
+        if (root->left) travel(root->left, vec);
+        if (root->right) travel(root->right, vec);
+    }
 };
 // @lc code=end
+
