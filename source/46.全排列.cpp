@@ -9,27 +9,26 @@ class Solution {
  public:
   vector<vector<int>> permute(vector<int>& nums) {
     vector<vector<int>> res;
-    vector<int> per;
+    vector<int> sub;
     vector<bool> used(nums.size(), false);
-
-    permute(res, per, nums, used);
+    permute(res, sub, nums, used);
     return res;
   }
 
-  void permute(vector<vector<int>>& res, vector<int>& per, vector<int>& nums,
+  void permute(vector<vector<int>>& res, vector<int>& sub, vector<int>& nums,
                vector<bool>& used) {
-    if (per.size() == nums.size()) {
-      res.push_back(per);
+    if (sub.size() == nums.size()) {
+      res.push_back(sub);
       return;
     }
 
     for (int i = 0; i < nums.size(); i++) {
       if (used[i] == false) {
-        per.push_back(nums[i]);
+        sub.push_back(nums[i]);
         used[i] = true;
-        permute(res, per, nums, used);
+        permute(res, sub, nums, used);
         used[i] = false;
-        per.pop_back();
+        sub.pop_back();
       }
     }
   }
