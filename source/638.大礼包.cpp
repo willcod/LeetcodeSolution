@@ -5,40 +5,40 @@
  */
 #include "cpp_includes.h"
 // @lc code=start
-bool operator < (const vector<int>& a, const int &n) {
-    for (int i : a) {
-        if (i < n) {
-            return true;
-        }
+bool operator< (vector<int>& a, int n){
+    for (auto num : a) {
+        if (num < n) return true;
     }
+
     return false;
 }
 
-void operator -= (vector<int>& a, const vector<int>& b) { 
-    for (int i = 0; i < a.size(); i++) {
+void operator -= (vector<int>& a, vector<int>& b) { 
+    for (int i = 0;i < a.size();i++){
         a[i] -= b[i];
     }
 }
 
-void operator += (vector<int>& a, const vector<int>& b) { 
-    for (int i = 0; i < a.size(); i++) {
+void operator += (vector<int>& a, vector<int>& b) { 
+    for (int i = 0;i < a.size();i++){
         a[i] += b[i];
     }
 }
-
 class Solution {
 public:
-    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs, int cost=0) {
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        return shoppingOffers(price, special, needs, 0);
+    }
+
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs, int cost) {
         if (needs < 0) return INT_MAX;
 
         int m = inner_product(needs.begin(), needs.end(), price.begin(), cost);
 
-        for (auto& offer : special) {
-            if (cost + offer.back() >= m) continue;
-            
-            needs -= offer;
-            m = min(m, shoppingOffers(price, special, needs, cost+offer.back()));
-            needs += offer;
+        for (int i = 0; i < special.size(); i++) {
+            needs -= special[i];
+            m = min(m, shoppingOffers(price, special, needs, cost+special[i].back()));
+            needs += special[i];
         }
 
         return m;
