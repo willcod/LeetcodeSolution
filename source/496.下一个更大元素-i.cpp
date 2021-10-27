@@ -8,21 +8,24 @@
 class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-        unordered_map<int, int> nums2pos;
+        vector<int> res;
+
+        unordered_map<int, int> address;
         for (int i = 0; i < nums2.size(); i++) {
-            nums2pos[nums2[i]] = i;
+            address[nums2[i]] = i;
         }
 
-        vector<int> res(nums1.size(), -1);
         for (int i = 0; i < nums1.size(); i++) {
-            int start = nums2pos[nums1[i]];
-            for (int j = start+1; j < nums2.size(); j++) {
-                if (nums2[j] > nums1[i]) {
-                    res[i] = nums2[j];
+            int j = address[nums1[i]];
+            for (;j<nums2.size(); j++){
+                if (nums1[i] < nums2[j]) {
+                    res.push_back(nums2[j]);
                     break;
                 }
             }
+            if (j == nums2.size()) res.push_back(-1);
         }
+
         return res;
     }
 };

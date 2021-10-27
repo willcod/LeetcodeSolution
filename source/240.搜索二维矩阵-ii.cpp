@@ -6,22 +6,22 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int row = matrix.size() - 1;
-        int col = 0;
+ public:
+  bool searchMatrix(vector<vector<int>>& matrix, int target) {
+    int rows = matrix.size() - 1;
+    int cols = 0;
 
-        while (row >= 0 && col < matrix[0].size()) {
-            if (matrix[row][col] == target) {
-                return true;
-            } else if (matrix[row][col] > target) {
-                row--;
-            } else {
-                col++;
-            }
-        }
-
-        return false;
+    while (rows >= 0 && cols < matrix[0].size()) {
+      if (matrix[rows][cols] == target) {
+        return true;
+      } else if (matrix[rows][cols] > target) {
+        rows--;
+      } else {
+        cols++;
+      }
     }
+
+    return false;
+  }
 };
 // @lc code=end

@@ -3,40 +3,39 @@
  *
  * [347] 前 K 个高频元素
  */
-
-
+#include "cpp_includes.h"
 // @lc code=start
-
-struct cmp
-{
-    bool operator() (pair<int, int> a, pair<int, int> b) {
-        return a.second > b.second;
-    }
+struct cmp {
+  bool operator()(pair<int, int>& a, pair<int, int>& b) {
+    return a.second > b.second;
+  }
 };
 
 class Solution {
-public:
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        vector<int> result;
-        unordered_map<int, int> freq;
-        for (auto n : nums) {
-            freq[n]++;
-        }
-
-        priority_queue<pair<int, int>, vector<pair<int,int>>, cmp> pq;
-
-        for (auto f : freq) {
-            pq.push(f);
-            if (pq.size() > k) pq.pop();
-        }
-
-        while (!pq.empty()) {
-            auto p = pq.top();
-            pq.pop();
-            result.push_back(p.first);
-        }
-        return result;
+ public:
+  vector<int> topKFrequent(vector<int>& nums, int k) {
+    unordered_map<int, int> freq;
+    for (int n : nums) {
+      freq[n]++;
     }
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, cmp> pq;
+
+    for (auto kv : freq) {
+      pq.push(kv);
+      if (pq.size() > k) {
+        pq.pop();
+      }
+    }
+
+    vector<int> res;
+    while (!pq.empty()) {
+      auto kv = pq.top();
+      pq.pop();
+      res.push_back(kv.first);
+    }
+
+    return res;
+  }
 };
 // @lc code=end
-

@@ -12,7 +12,7 @@ public:
         int two = nums.size() - 1;
 
         for (int i = 0; i <= two; i++) {
-            while (i <= two && nums[i] == 2) {
+            while(i <= two && nums[i] == 2) {
                 swap(nums[i], nums[two--]);
             }
 
