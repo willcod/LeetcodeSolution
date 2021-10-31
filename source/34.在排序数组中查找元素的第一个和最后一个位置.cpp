@@ -6,22 +6,34 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     vector<int> searchRange(vector<int>& nums, int target) {
-        int start = -1;
-        int end = -1;
 
-        for (int i = 0; i < nums.size(); i++) {
-            if (nums[i] == target) {
-                start = i;
-                end = start;
-                while (end + 1 < nums.size() && nums[end + 1] == target) end++;
 
-                return {start, end};
+        int l = binarySearch(nums, target);
+        int r = binarySearch(nums, target+1);
+
+        if (l == r) {
+            return {-1, -1};
+        } else {
+            return {l, r-1};
+        }
+    }
+
+    int binarySearch(vector<int>& nums, int target) {
+        int l = 0;
+        int r = nums.size() - 1;
+
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+            if (nums[m] < target) {
+                l = m + 1;
+            } else {
+                r = m - 1;
             }
         }
-
-        return {start, end};
+        return l;
     }
 };
 // @lc code=end
+
