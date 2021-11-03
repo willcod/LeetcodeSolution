@@ -8,19 +8,18 @@
 class Solution {
  public:
   bool searchMatrix(vector<vector<int>>& matrix, int target) {
-    int rows = matrix.size() - 1;
-    int cols = 0;
+    int row = matrix.size() - 1;
+    int col = 0;
 
-    while (rows >= 0 && cols < matrix[0].size()) {
-      if (matrix[rows][cols] == target) {
-        return true;
-      } else if (matrix[rows][cols] > target) {
-        rows--;
-      } else {
-        cols++;
+    while (row >= 0 && col < matrix[0].size()) {
+      if (matrix[row][col] == target) return true;
+
+      if (matrix[row][col] > target) {
+        row--;
+      } else if (matrix[row][col] < target) {
+        col++;
       }
     }
-
     return false;
   }
 };

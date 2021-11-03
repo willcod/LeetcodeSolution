@@ -6,32 +6,31 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
-    int search(vector<int>& nums, int target) {
-        if (nums.empty()) return -1;
-        int left = 0;
-        int right = nums.size() - 1;
+ public:
+  int search(vector<int>& nums, int target) {
+    int l = 0;
+    int r = nums.size() - 1;
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
+    while (l <= r) {
+      int m = l + (r - l) / 2;
+      if (nums[m] == target) return m;
 
-            if (nums[mid] == target) return mid;
-
-            if (nums[mid] >= nums[left]) {
-                if (target >= nums[left] && target < nums[mid]) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            } else {
-                if (target > nums[mid] && target <= nums[right]) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
-                }
-            }
+      if (nums[m] >= nums[l]) {
+        if (target >= nums[l] && target < nums[m]) {
+          r = m - 1;
+        } else {
+          l = m + 1;
         }
-        return -1;
+      } else {
+        if (target <= nums[r] && target > nums[m]) {
+          l = m + 1;
+        } else {
+          r = m - 1;
+        }
+      }
     }
+
+    return -1;
+  }
 };
 // @lc code=end
