@@ -3,7 +3,7 @@
  *
  * [299] 猜数字游戏
  */
-
+#include "cpp_includes.h"
 // @lc code=start
 class Solution {
 public:
@@ -16,8 +16,8 @@ public:
         for (int i = 0; i < secret.length(); i++) {
             if (secret[i] == guess[i]) bull++;
             else {
-                if (count[secret[i] - '0']++ < 0) cow++;
-                if (count[guess[i] - '0']-- > 0) cow++;
+                if (count[secret[i]-'0']++ < 0) cow++;
+                if (count[guess[i]-'0']-- > 0) cow++;
             }
         }
 
