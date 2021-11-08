@@ -6,14 +6,17 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
+public:
     bool canJump(vector<int>& nums) {
-        int end = 0;
-        for (int i = 0; i <= end; i++) {
-            end = max(end, nums[i] + i);
-            if (end >= nums.size() - 1) return true;
+        int rightmost = 0;
+
+        for (int i = 0; i <= rightmost; i++) {
+            rightmost = max(rightmost, nums[i]+i);
+            if (rightmost >= nums.size() - 1) return true;
         }
+
         return false;
     }
 };
 // @lc code=end
+
