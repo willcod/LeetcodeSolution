@@ -6,25 +6,27 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
-    int squareSum(int n) {
-        int sum = 0;
-        while (n > 0) {
-            sum += pow(n % 10, 2);
-            n /= 10;
-        }
-
-        return sum;
+ public:
+  int sqrtsum(int n) {
+    int sum = 0;
+    while (n) {
+      sum += (n % 10) * (n % 10);
+      n /= 10;
     }
-    bool isHappy(int n) {
-        int slow = n;
-        int fast = squareSum(n);
-        while (slow != fast) {
-            slow = squareSum(slow);
-            fast = squareSum(squareSum(fast));
-        }
+    return sum;
+  }
+  bool isHappy(int n) {
+    int slow = n;
+    int fast = sqrtsum(n);
 
-        return slow == 1;
+    while (slow != fast) {
+      slow = sqrtsum(slow);
+      fast = sqrtsum(sqrtsum(fast));
+
+      if (slow == 1) return true;
     }
+
+    return slow == 1;
+  }
 };
 // @lc code=end

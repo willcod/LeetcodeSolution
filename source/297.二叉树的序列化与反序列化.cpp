@@ -15,7 +15,8 @@
  * };
  */
 class Codec {
-   public:
+public:
+
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         ostringstream out;
@@ -29,11 +30,12 @@ class Codec {
         return deserialize(in);
     }
 
-   private:
+    private: 
     void serialize(TreeNode* root, ostringstream& out) {
-        if (!root)
+        if (!root) {
             out << "# ";
-        else {
+            return;
+        } else {
             out << root->val << ' ';
             serialize(root->left, out);
             serialize(root->right, out);
@@ -43,7 +45,7 @@ class Codec {
     TreeNode* deserialize(istringstream& in) {
         string val;
         in >> val;
-        if (val == "#") return nullptr;
+        if (val == "#") return NULL;
 
         TreeNode* root = new TreeNode(stoi(val));
         root->left = deserialize(in);
@@ -57,3 +59,4 @@ class Codec {
 // Codec ser, deser;
 // TreeNode* ans = deser.deserialize(ser.serialize(root));
 // @lc code=end
+

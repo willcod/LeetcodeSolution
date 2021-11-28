@@ -10,7 +10,7 @@ public:
     vector<int> _cache;
 
     Solution(vector<int>& nums) : _cache(nums) {
-        
+
     }
     
     /** Resets the array to its original configuration and return it. */
@@ -22,10 +22,9 @@ public:
     vector<int> shuffle() {
         vector<int> shuffled(_cache);
 
-        for (int i = _cache.size() - 1; i > 0; i--) {
+        for (int i = _cache.size() - 1; i > 0; i--){
             swap(shuffled[i], shuffled[rand()%(i+1)]);
         }
-
         return shuffled;
     }
 };
