@@ -21,7 +21,7 @@ public:
     int maxDepth(TreeNode* root) {
         if (!root) return 0;
 
-        return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+        return max(maxDepth(root->right), maxDepth(root->left)) + 1;
     }
 };
 // @lc code=end
