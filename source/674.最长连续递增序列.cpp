@@ -6,22 +6,21 @@
 #include "cpp_includes.h"
 // @lc code=start
 class Solution {
-   public:
-    int findLengthOfLCIS(vector<int>& nums) {
-        if (nums.empty()) return 0;
-        int n = nums.size();
+ public:
+  int findLengthOfLCIS(vector<int>& nums) {
+    int max_len = 1;
 
-        int maxlen = 1;
-        int len = 1;
-        for (int i = 1; i < n; i++) {
-            if (nums[i] > nums[i - 1]) {
-                len++;
-                maxlen = max(maxlen, len);
-            } else {
-                len = 1;
-            }
-        }
-        return maxlen;
+    int len = 1;
+    for (int i = 1; i < nums.size(); i++) {
+      if (nums[i] > nums[i - 1]) {
+        len++;
+        max_len = max(max_len, len);
+      } else {
+        len = 1;
+      }
     }
+
+    return max_len;
+  }
 };
 // @lc code=end

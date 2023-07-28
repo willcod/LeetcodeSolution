@@ -8,16 +8,16 @@
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-        int zero = 0;
-        int two = nums.size() - 1;
+        int red = 0;
+        int blue = nums.size()-1;
 
-        for (int i = 0; i <= two; i++) {
-            while(i <= two && nums[i] == 2) {
-                swap(nums[i], nums[two--]);
+        for (int i = 0; i <= blue; i++) {
+            while (i <= blue && nums[i] == 2) {
+                swap(nums[i], nums[blue--]);
             }
 
-            if (nums[i] == 0) {
-                swap(nums[i], nums[zero++]);
+            if (nums[i] == 0){
+                swap(nums[i], nums[red++]);
             }
         }
     }
