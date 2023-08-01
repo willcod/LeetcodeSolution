@@ -14,29 +14,26 @@
  * };
  */
 class Solution {
-   public:
-    ListNode *detectCycle(ListNode *head) {
-        if (!head) return head;
+ public:
+  ListNode *detectCycle(ListNode *head) {
+    auto slow = head;
+    auto fast = head;
 
-        auto fast = head;
-        auto slow = head;
+    while (fast != nullptr && fast->next != nullptr) {
+      fast = fast->next->next;
+      slow = slow->next;
 
-        while (fast && fast->next) {
-            fast = fast->next->next;
-            slow = slow->next;
-
-            if (fast == slow) {
-                auto begin = head;
-
-                while (slow != begin) {
-                    slow = slow->next;
-                    begin = begin->next;
-                }
-                return slow;
-            }
+      if (fast == slow) {
+        fast = head;
+        while (fast != slow) {
+          fast = fast->next;
+          slow = slow->next;
         }
-
-        return NULL;
+        return fast;
+      }
     }
+
+    return nullptr;
+  }
 };
 // @lc code=end
